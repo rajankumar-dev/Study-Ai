@@ -11,7 +11,7 @@ export const createNote = async (req, res) => {
       content,
     });
 
-    req.status(201).json({
+    res.status(201).json({
       message: "Note created successfully",
       note,
     });
@@ -23,10 +23,25 @@ export const createNote = async (req, res) => {
 //Get all Notes
 export const getNotes = async (req, res) => {
   try {
-    const notes = await Note.find({ user: req.user.id }).sort({
-      createAt: -1,
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 5;
+
+    // ✅ total count (yahi add karna hai)
+    const total = await Note.countDocuments({ user: req.user.id });
+
+    // ✅ paginated notes
+    const notes = await Note.find({ user: req.user.id })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    // ✅ final response
+    res.json({
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+      notes,
     });
-    res.json(notes);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -48,6 +63,52 @@ export const deleteNote = async (req, res) => {
     await note.deleteOne();
 
     res.json({ message: "Note deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//Update Note
+export const updateNote = async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+
+    if (!note) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).json({ error: "Not authorized" });
+    }
+
+    note.title = req.body.title || note.title;
+    note.content = req.body.content || note.content;
+
+    const updatedNote = await note.save();
+
+    res.json(updatedNote);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//Get Note by ID
+
+export const getNoteById = async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+
+    // ❌ note exist nahi karta
+    if (!note) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
+    // 🔐 security check
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).json({ error: "Not authorized" });
+    }
+
+    res.json(note);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
