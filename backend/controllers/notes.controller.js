@@ -5,10 +5,41 @@ export const createNote = async (req, res) => {
   try {
     const { title, content } = req.body;
 
+    // ✅ Step 3: Basic validation
+    if (!title || !content) {
+      return res
+        .status(400)
+        .json({ message: "Title and content are required" });
+    }
+
+    // ❗ Optional: file required banana hai to ye ON rakho
+    // if (!req.file) {
+    //   return res.status(400).json({ message: "File is required" });
+    // }
+
+    let fileUrl = null;
+    let fileType = null;
+
+    if (req.file) {
+      fileUrl = req.file.path;
+      fileType = req.file.mimetype;
+
+      // ✅ Step 2: File type logic
+      if (fileType === "application/pdf") {
+        console.log("PDF uploaded");
+      } else if (fileType.startsWith("image/")) {
+        console.log("Image uploaded");
+      } else {
+        return res.status(400).json({ message: "Invalid file type" });
+      }
+    }
+
     const note = await Note.create({
       user: req.user.id,
       title,
       content,
+      fileUrl,
+      fileType,
     });
 
     res.status(201).json({
@@ -26,16 +57,13 @@ export const getNotes = async (req, res) => {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 5;
 
-    // ✅ total count (yahi add karna hai)
     const total = await Note.countDocuments({ user: req.user.id });
 
-    // ✅ paginated notes
     const notes = await Note.find({ user: req.user.id })
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
 
-    // ✅ final response
     res.json({
       total,
       page,
@@ -84,6 +112,12 @@ export const updateNote = async (req, res) => {
     note.title = req.body.title || note.title;
     note.content = req.body.content || note.content;
 
+    // ✅ Optional: file update support
+    if (req.file) {
+      note.fileUrl = req.file.path;
+      note.fileType = req.file.mimetype;
+    }
+
     const updatedNote = await note.save();
 
     res.json(updatedNote);
@@ -93,17 +127,14 @@ export const updateNote = async (req, res) => {
 };
 
 //Get Note by ID
-
 export const getNoteById = async (req, res) => {
   try {
     const note = await Note.findById(req.params.id);
 
-    // ❌ note exist nahi karta
     if (!note) {
       return res.status(404).json({ error: "Note not found" });
     }
 
-    // 🔐 security check
     if (note.user.toString() !== req.user.id) {
       return res.status(401).json({ error: "Not authorized" });
     }

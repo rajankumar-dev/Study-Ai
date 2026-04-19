@@ -7,13 +7,31 @@ const noteSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
     title: {
       type: String,
       required: true,
     },
+
     content: {
       type: String,
       required: true,
+    },
+
+    // File upload fields
+    fileUrl: {
+      type: String,
+      default: null,
+    },
+
+    fileType: {
+      type: String,
+      default: null,
+    },
+
+    extractedText: {
+      type: String,
+      default: "",
     },
   },
   { timestamps: true },
