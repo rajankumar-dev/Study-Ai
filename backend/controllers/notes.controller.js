@@ -3,19 +3,15 @@ import Note from "../models/note.model.js";
 //Create Note
 export const createNote = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content } = req.body || {};
 
-    // ✅ Step 3: Basic validation
+    console.log("BODY:", req.body);
+
     if (!title || !content) {
       return res
         .status(400)
         .json({ message: "Title and content are required" });
     }
-
-    // ❗ Optional: file required banana hai to ye ON rakho
-    // if (!req.file) {
-    //   return res.status(400).json({ message: "File is required" });
-    // }
 
     let fileUrl = null;
     let fileType = null;
@@ -23,16 +19,11 @@ export const createNote = async (req, res) => {
     if (req.file) {
       fileUrl = req.file.path;
       fileType = req.file.mimetype;
-
-      // ✅ Step 2: File type logic
-      if (fileType === "application/pdf") {
-        console.log("PDF uploaded");
-      } else if (fileType.startsWith("image/")) {
-        console.log("Image uploaded");
-      } else {
-        return res.status(400).json({ message: "Invalid file type" });
-      }
     }
+
+    // 🔥 SIMPLE & STABLE LOGIC
+    let extractedText = content; // अभी यही use करेंगे
+    let summary = ""; // AI बाद में भरेगा
 
     const note = await Note.create({
       user: req.user.id,
@@ -40,6 +31,8 @@ export const createNote = async (req, res) => {
       content,
       fileUrl,
       fileType,
+      extractedText,
+      summary, // 🔥 new field
     });
 
     res.status(201).json({
@@ -112,7 +105,6 @@ export const updateNote = async (req, res) => {
     note.title = req.body.title || note.title;
     note.content = req.body.content || note.content;
 
-    // ✅ Optional: file update support
     if (req.file) {
       note.fileUrl = req.file.path;
       note.fileType = req.file.mimetype;
