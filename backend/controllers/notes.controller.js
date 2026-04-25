@@ -1,4 +1,5 @@
 import Note from "../models/note.model.js";
+import { generateSummary } from "../config/ai.js";
 
 //Create Note
 export const createNote = async (req, res) => {
@@ -22,8 +23,8 @@ export const createNote = async (req, res) => {
     }
 
     // 🔥 SIMPLE & STABLE LOGIC
-    let extractedText = content; // अभी यही use करेंगे
-    let summary = ""; // AI बाद में भरेगा
+    let extractedText = content; //For devlopment use only. Baad me change krna hai pdf-parse se
+    let summary = await generateSummary(extractedText);
 
     const note = await Note.create({
       user: req.user.id,
