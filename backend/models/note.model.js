@@ -33,6 +33,10 @@ const noteSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    summary: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true },
 );
