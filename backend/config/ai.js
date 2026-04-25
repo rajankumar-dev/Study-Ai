@@ -35,3 +35,37 @@
 // };
 
 // We are using groq-ai free ai summary extracter
+import Groq from "groq-sdk";
+
+// ✅ Lazy init function
+const getClient = () => {
+  return new Groq({
+    apiKey: process.env.GROQ_API_KEY,
+  });
+};
+
+// ✅ Summary function
+export const generateSummary = async (text) => {
+  try {
+    const client = getClient(); // 🔥 यहीं बन रहा है
+
+    const response = await client.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        {
+          role: "system",
+          content: "Summarize notes in simple bullet points",
+        },
+        {
+          role: "user",
+          content: text,
+        },
+      ],
+    });
+
+    return response.choices[0].message.content;
+  } catch (error) {
+    console.log("Groq error:", error.message);
+    return "Summary not available";
+  }
+};
