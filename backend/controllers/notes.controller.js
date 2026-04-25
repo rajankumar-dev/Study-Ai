@@ -26,6 +26,9 @@ export const createNote = async (req, res) => {
     let extractedText = content; //For devlopment use only. Baad me change krna hai pdf-parse se
     let summary = await generateSummary(extractedText);
 
+    console.log("CONTENT:", content);
+    console.log("EXTRACTED:", extractedText);
+
     const note = await Note.create({
       user: req.user.id,
       title,
