@@ -47,25 +47,77 @@ const getClient = () => {
 // ✅ Summary function
 export const generateSummary = async (text) => {
   try {
-    const client = getClient(); // 🔥 यहीं बन रहा है
+    const client = getClient();
+
+    // ✅ safety check
+    if (!text || text.trim() === "") {
+      return "No content to summarize";
+    }
 
     const response = await client.chat.completions.create({
       model: "llama-3.1-8b-instant",
       messages: [
         {
           role: "system",
-          content: "Summarize notes in simple bullet points",
+          content: "You are an AI that summarizes text.",
         },
         {
           role: "user",
-          content: text,
+          content: `Summarize the following content in 3-5 SHORT bullet points.
+ONLY return bullet points. No extra text.
+
+${text}`,
         },
       ],
+      temperature: 0.5,
     });
 
-    return response.choices[0].message.content;
+    const result = response?.choices?.[0]?.message?.content;
+
+    return result || "Summary not generated";
   } catch (error) {
     console.log("Groq error:", error.message);
     return "Summary not available";
+  }
+};
+
+export const askQuestion = async (context, question) => {
+  try {
+    const client = getClient();
+
+    if (!context || context.trim() === "") {
+      return "No notes available to answer from";
+    }
+
+    const response = await client.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        {
+          role: "system",
+          content: "You answer questions based ONLY on provided notes.",
+        },
+        {
+          role: "user",
+          content: `
+Use the following notes to answer the question.
+
+NOTES:
+"""${context}"""
+
+QUESTION:
+${question}
+
+Answer in simple sentences.
+If answer not found, say "Not in notes".
+          `,
+        },
+      ],
+      temperature: 0.3,
+    });
+
+    return response?.choices?.[0]?.message?.content || "No answer found";
+  } catch (error) {
+    console.log("AI Q&A error:", error.message);
+    return "Error getting answer";
   }
 };
