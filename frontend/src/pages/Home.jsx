@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import API from "../services/api";
+import API from "../api/axios";
 
 const Home = () => {
     const [notes, setNotes] = useState([]);
@@ -14,19 +14,21 @@ const Home = () => {
 
     return (
         <div>
-            <h2>My Notes</h2>
+            <h2 style={{ marginLeft: 10 }}>My Notes</h2>
 
-            {notes.map((note) => (
-                <div key={note._id} style={{ border: "1px solid", margin: 10 }}>
-                    <h3>{note.title}</h3>
-                    <p>{note.content}</p>
+            {
+                notes.map((note) => (
+                    <div key={note._id} style={{ border: "1px solid", padding: 10, margin: 10 }}>
+                        <h3>{note.title}</h3>
+                        <p>{note.content}</p>
 
-                    {/* 🔥 AI Summary */}
-                    <b>Summary:</b>
-                    <p>{note.summary}</p>
-                </div>
-            ))}
-        </div>
+                        {/* 🔥 AI Summary */}
+                        <b>Summary:</b>
+                        <p>{note.summary}</p>
+                    </div>
+                ))
+            }
+        </div >
     );
 };
 
