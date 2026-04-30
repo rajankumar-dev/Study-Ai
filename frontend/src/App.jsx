@@ -1,12 +1,21 @@
-
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AuthProvider from "./context/AuthContext";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Chat from "./pages/Chat";
 
 function App() {
-
-
   return (
-    <h1>Hello World</h1>
-  )
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/chat" element={<Chat />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
