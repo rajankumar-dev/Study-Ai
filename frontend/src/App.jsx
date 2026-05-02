@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 
 import Home from "./pages/Home";
@@ -19,6 +19,7 @@ function App() {
           path="/dashboard"
           element={token ? <Layout><Home /></Layout> : <Login />}
         />
+        <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/chat" element={<Layout><Chat /></Layout>} />
         <Route path="/create" element={<Layout><CreateNote /></Layout>} />
         <Route path="/notes" element={<Layout><Notes /></Layout>} />
