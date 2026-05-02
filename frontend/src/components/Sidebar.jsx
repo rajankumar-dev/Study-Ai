@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom";
+import { FaHome, FaBook, FaRobot, FaUpload } from "react-icons/fa";
 
 export default function Sidebar() {
 
     const menu = [
-        { name: "Dashboard", path: "/dashboard" }, // ✅ change किया
-        { name: "My Notes", path: "/notes" },
-        { name: "AI Chat", path: "/chat" },
-        { name: "Upload Notes", path: "/create" },
+        { name: "Dashboard", path: "/dashboard", icon: <FaHome /> },
+        { name: "My Notes", path: "/notes", icon: <FaBook /> },
+        { name: "AI Chat", path: "/chat", icon: <FaRobot /> },
+        { name: "Upload Notes", path: "/create", icon: <FaUpload /> },
     ];
 
     return (
@@ -20,15 +21,23 @@ export default function Sidebar() {
                     <li key={item.path}>
                         <NavLink
                             to={item.path}
-                            end={item.path === "/dashboard"} // 🔥 important fix
+                            end={item.path === "/dashboard"}
                             className={({ isActive }) =>
-                                `block p-2 rounded-lg transition ${isActive
-                                    ? "bg-blue-500 text-white"
+                                `flex items-center gap-3 px-4 py-3 rounded-lg transition ${isActive
+                                    ? "bg-blue-100 text-blue-600"
                                     : "hover:bg-gray-200 text-gray-700"
                                 }`
                             }
                         >
-                            {item.name}
+                            {/* Icon */}
+                            <span className="text-lg">
+                                {item.icon}
+                            </span>
+
+                            {/* Text */}
+                            <span className="font-medium">
+                                {item.name}
+                            </span>
                         </NavLink>
                     </li>
                 ))}
