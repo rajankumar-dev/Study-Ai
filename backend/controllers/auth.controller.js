@@ -63,8 +63,8 @@ export async function loginUser(req, res) {
   res.status(200).json({
     message: "User logged in Successfully",
     user: {
-      name: user.name,
       email: user.email,
+      name: user.name,
     },
     token,
   });
