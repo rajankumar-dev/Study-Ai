@@ -15,14 +15,13 @@ export default function Login() {
         try {
             const res = await API.post("/auth/login", { email, password });
 
-            // ❌ remove this
-            // localStorage.setItem("token", res.data.token);
+            console.log(res.data);
 
-            // ✅ use context instead
-            login(res.data.token);
+            login(res.data.token, res.data.user);
 
-            navigate("/dashboard");
+            navigate("/");
         } catch (err) {
+            console.log(err.response?.data || err.message)
             alert("Login failed");
         }
     };
