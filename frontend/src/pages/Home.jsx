@@ -29,23 +29,23 @@ export default function Home() {
 
             {/* 🔥 Dynamic Stats Cards */}
             <div className="grid grid-cols-3 gap-6 mb-8">
-                <div className="bg-blue-200 p-6 rounded-xl shadow">
+                <div className="bg-blue-200 p-6 rounded-xl shadow-md flex flex-col justify-between hover:shadow-lg transition duration-200">
                     <h2 className="text-gray-700">Total Notes</h2>
-                    <p className="text-3xl font-bold">
+                    <p className="text-3xl font-bold mt-1">
                         {notes.length}
                     </p>
                 </div>
 
-                <div className="bg-yellow-200 p-6 rounded-xl shadow">
+                <div className="bg-yellow-200 p-6 rounded-xl shadow-md flex flex-col justify-between hover:shadow-lg transition duration-200">
                     <h2 className="text-gray-700">AI Summaries</h2>
-                    <p className="text-3xl font-bold">
+                    <p className="text-3xl font-bold mt-1">
                         {notes.filter(n => n.summary).length}
                     </p>
                 </div>
 
-                <div className="bg-green-200 p-6 rounded-xl shadow">
+                <div className="bg-green-200 p-6 rounded-xl shadow-md flex flex-col justify-between hover:shadow-lg transition duration-200 ">
                     <h2 className="text-gray-700">Generated Questions</h2>
-                    <p className="text-3xl font-bold">
+                    <p className="text-3xl font-bold mt-1">
                         Coming Soon
                     </p>
                 </div>
