@@ -37,19 +37,20 @@
 // We are using groq-ai free ai summary extracter
 import Groq from "groq-sdk";
 
-// ✅ Lazy init function
+// Lazy init function
 const getClient = () => {
   return new Groq({
     apiKey: process.env.GROQ_API_KEY,
   });
+  console.log(process.env.GROQ_API_KEY);
 };
 
-// ✅ Summary function
+// Summary function
 export const generateSummary = async (text) => {
   try {
     const client = getClient();
 
-    // ✅ safety check
+    // safety check
     if (!text || text.trim() === "") {
       return "No content to summarize";
     }
@@ -114,6 +115,8 @@ If answer not found, say "Not in notes".
       ],
       temperature: 0.3,
     });
+    console.log("QUESTION:", question);
+    console.log("CONTEXT LENGTH:", context.length);
 
     return response?.choices?.[0]?.message?.content || "No answer found";
   } catch (error) {
