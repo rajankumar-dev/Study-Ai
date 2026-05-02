@@ -1,0 +1,13 @@
+import API from "../../api/axios";
+
+// Get all notes
+export const getNotes = async () => {
+  const res = await API.get("/notes");
+  return res.data;
+};
+
+// Delete note
+export const deleteNote = async (id) => {
+  const res = await API.delete(`/notes/${id}`);
+  return res.data;
+};
