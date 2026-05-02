@@ -1,17 +1,26 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import { useAuth } from "../context/AuthContext"; // ✅ add this
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    const { login } = useAuth(); // ✅ get login function
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const res = await API.post("/auth/login", { email, password });
-            localStorage.setItem("token", res.data.token);
+
+            // ❌ remove this
+            // localStorage.setItem("token", res.data.token);
+
+            // ✅ use context instead
+            login(res.data.token);
+
             navigate("/dashboard");
         } catch (err) {
             alert("Login failed");
@@ -23,12 +32,10 @@ export default function Login() {
 
             <div className="bg-white w-[400px] p-8 rounded-2xl shadow-md">
 
-                {/* Logo */}
                 <h1 className="text-3xl font-bold text-center mb-4">
                     Study<span className="text-blue-500">AI</span>
                 </h1>
 
-                {/* Title */}
                 <h2 className="text-xl font-semibold text-center mb-1">
                     Login
                 </h2>
@@ -38,7 +45,6 @@ export default function Login() {
 
                 <form onSubmit={handleLogin}>
 
-                    {/* Email */}
                     <div className="flex items-center border rounded-lg px-3 mb-4 bg-gray-50">
                         <span className="text-gray-400">📧</span>
                         <input
@@ -50,7 +56,6 @@ export default function Login() {
                         />
                     </div>
 
-                    {/* Password */}
                     <div className="flex items-center border rounded-lg px-3 mb-4 bg-gray-50">
                         <span className="text-gray-400">🔒</span>
                         <input
@@ -62,14 +67,12 @@ export default function Login() {
                         />
                     </div>
 
-                    {/* Button */}
                     <button className="w-full py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-500 to-blue-400 hover:opacity-90 transition">
                         Login
                     </button>
 
                 </form>
 
-                {/* Footer */}
                 <p className="text-center text-gray-500 text-sm mt-4">
                     New to StudyAI?{" "}
                     <Link to="/signup" className="text-blue-500 font-medium">
