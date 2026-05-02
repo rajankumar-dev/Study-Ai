@@ -1,20 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AuthProvider from "./context/AuthContext";
+import Layout from "./components/Layout";
+
 import Home from "./pages/Home";
-import Login from "./pages/Login";
 import Chat from "./pages/Chat";
+import CreateNote from "./pages/CreateNote";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/chat" element={<Chat />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <BrowserRouter>
+      <Routes>
+
+        {/* Layout Wrap */}
+        <Route path="/" element={<Layout><Home /></Layout>} />
+        <Route path="/chat" element={<Layout><Chat /></Layout>} />
+        <Route path="/create" element={<Layout><CreateNote /></Layout>} />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
