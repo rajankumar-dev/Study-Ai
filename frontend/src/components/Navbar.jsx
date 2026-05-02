@@ -11,7 +11,7 @@ export default function Navbar() {
     };
 
     return (
-        <div className="flex justify-between items-center bg-white px-6 py-3 shadow">
+        <div className="flex justify-between h-16 items-center bg-white px-6 py-3 shadow-sm">
 
             {/* Left - Logo */}
             <h1 className="text-xl font-bold">
@@ -27,14 +27,14 @@ export default function Navbar() {
                         U
                     </div>
                     <span className="text-gray-700 text-sm">
-                        User
+                        user
                     </span>
                 </div>
 
                 {/* Logout */}
                 <button
                     onClick={handleLogout}
-                    className="bg-red-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-600"
+                    className="bg-red-500 text-white px-4 py-3 rounded-lg text-sm hover:bg-red-600"
                 >
                     Logout
                 </button>
