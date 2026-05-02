@@ -1,10 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
-    const location = useLocation();
 
     const menu = [
-        { name: "Dashboard", path: "/" },
+        { name: "Dashboard", path: "/dashboard" }, // ✅ change किया
         { name: "My Notes", path: "/notes" },
         { name: "AI Chat", path: "/chat" },
         { name: "Upload Notes", path: "/create" },
@@ -19,15 +18,18 @@ export default function Sidebar() {
             <ul className="space-y-3">
                 {menu.map((item) => (
                     <li key={item.path}>
-                        <Link
+                        <NavLink
                             to={item.path}
-                            className={`block p-2 rounded-lg ${location.pathname === item.path
+                            end={item.path === "/dashboard"} // 🔥 important fix
+                            className={({ isActive }) =>
+                                `block p-2 rounded-lg transition ${isActive
                                     ? "bg-blue-500 text-white"
-                                    : "hover:bg-gray-200"
-                                }`}
+                                    : "hover:bg-gray-200 text-gray-700"
+                                }`
+                            }
                         >
                             {item.name}
-                        </Link>
+                        </NavLink>
                     </li>
                 ))}
             </ul>

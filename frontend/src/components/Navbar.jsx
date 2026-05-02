@@ -1,19 +1,45 @@
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 export default function Navbar() {
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
+
     return (
-        <div className="bg-white shadow px-6 py-3 flex justify-between items-center">
+        <div className="flex justify-between items-center bg-white px-6 py-3 shadow">
 
-            <h2 className="font-semibold text-lg">Dashboard</h2>
+            {/* Left - Logo */}
+            <h1 className="text-xl font-bold">
+                Study<span className="text-blue-500">AI</span>
+            </h1>
 
+            {/* Right - User */}
             <div className="flex items-center gap-4">
-                <span className="text-gray-600">Rajan Kumar</span>
 
-                <img
-                    src="https://i.pravatar.cc/40"
-                    alt="user"
-                    className="w-8 h-8 rounded-full"
-                />
+                {/* User Info */}
+                <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-blue-500 text-white flex items-center justify-center rounded-full">
+                        U
+                    </div>
+                    <span className="text-gray-700 text-sm">
+                        User
+                    </span>
+                </div>
+
+                {/* Logout */}
+                <button
+                    onClick={handleLogout}
+                    className="bg-red-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-600"
+                >
+                    Logout
+                </button>
+
             </div>
-
         </div>
     );
 }
