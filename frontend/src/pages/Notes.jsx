@@ -1,31 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getNotes, deleteNote } from "../features/notes/notesApi";
 
 export default function Notes() {
+    const [notes, setNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState(null);
 
-    // Dummy data (baad me API se aayega)
-    const notes = [
-        {
-            _id: 1,
-            title: "Node.js Tutorial",
-            content: "Learn the basics of Node.js and Express framework.",
-        },
-        {
-            _id: 2,
-            title: "Biology Study Guide",
-            content: "Covers cell structure, DNA, and human anatomy.",
-        },
-        {
-            _id: 3,
-            title: "Ancient History",
-            content: "Study of early civilizations and cultures.",
-        },
-    ];
+    // Fetch notes
+    useEffect(() => {
+        fetchNotes();
+    }, []);
+
+    const fetchNotes = async () => {
+        try {
+            const data = await getNotes();
+            setNotes(data.notes);
+
+            if (data.notes.length > 0) {
+                setSelectedNote(data.notes[0]);
+            }
+        } catch (err) {
+            console.log("Error fetching notes", err);
+        }
+    };
+
+    // Delete note
+    const handleDelete = async (id) => {
+        await deleteNote(id);
+        fetchNotes();
+    };
 
     return (
         <div className="flex h-[calc(100vh-70px)] bg-gray-100">
 
-            {/* LEFT SIDE - NOTES LIST */}
+            {/* LEFT SIDE */}
             <div className="w-1/3 bg-white border-r p-4">
                 <h2 className="text-lg font-semibold mb-4">My Notes</h2>
 
@@ -45,12 +52,12 @@ export default function Notes() {
                 </div>
             </div>
 
-            {/* RIGHT SIDE - NOTE DETAIL */}
+            {/* RIGHT SIDE */}
             <div className="flex-1 p-6">
 
                 {!selectedNote ? (
                     <p className="text-gray-500">
-                        Select a note to view details
+                        No note selected
                     </p>
                 ) : (
                     <>
@@ -64,8 +71,11 @@ export default function Notes() {
                                 Ask AI
                             </button>
 
-                            <button className="bg-purple-500 text-white px-4 py-2 rounded">
-                                Generate Questions
+                            <button
+                                onClick={() => handleDelete(selectedNote._id)}
+                                className="bg-red-500 text-white px-4 py-2 rounded"
+                            >
+                                Delete
                             </button>
                         </div>
 
@@ -78,6 +88,13 @@ export default function Notes() {
                             <p className="text-gray-600">
                                 {selectedNote.content}
                             </p>
+
+                            {/* Optional extracted text */}
+                            {selectedNote.extractedText && (
+                                <div className="mt-4 text-sm text-gray-500">
+                                    <strong>Extracted:</strong> {selectedNote.extractedText}
+                                </div>
+                            )}
                         </div>
                     </>
                 )}
