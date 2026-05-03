@@ -6,8 +6,8 @@ const chatSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    question: String,
     answer: String,
+    question: String,
   },
   { timestamps: true },
 );

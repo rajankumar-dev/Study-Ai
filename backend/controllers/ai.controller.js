@@ -1,4 +1,5 @@
 import Note from "../models/note.model.js";
+import Chat from "../models/chat.model.js"; // NEW
 import { askQuestion } from "../config/ai.js";
 
 export const askFromNotes = async (req, res) => {
@@ -22,10 +23,10 @@ export const askFromNotes = async (req, res) => {
 
     // 🔥 Step 3: HYBRID LOGIC (SAFE)
     if (!context || context.trim().length < 50) {
-      // ❌ No notes → normal AI
+      // 👉 No notes → normal AI
       answer = await askQuestion("", question);
     } else {
-      // ✅ Notes exist → smart prompt
+      // 👉 Notes exist → smart prompt
       const smartPrompt = `
 You are a helpful AI assistant.
 
@@ -44,6 +45,19 @@ Answer:
       answer = await askQuestion(smartPrompt, question);
     }
 
+    // 🔥 Step 4: SAVE CHAT (NEW - SAFE)
+    try {
+      await Chat.create({
+        user: req.user.id,
+        question,
+        answer,
+      });
+    } catch (err) {
+      console.log("Chat save error:", err.message);
+      // ❌ agar save fail ho bhi jaye to response rukna nahi chahiye
+    }
+
+    // 🔥 Step 5: response
     res.json({
       question,
       answer,
