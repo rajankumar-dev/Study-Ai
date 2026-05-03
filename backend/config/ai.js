@@ -86,21 +86,28 @@ export const askQuestion = async (context, question) => {
   try {
     const client = getClient();
 
-    if (!context || context.trim() === "") {
-      return "No notes available to answer from";
-    }
+    // 🔥 smart fallback
+    const hasNotes = context && context.trim().length > 50;
 
     const response = await client.chat.completions.create({
       model: "llama-3.1-8b-instant",
       messages: [
         {
           role: "system",
-          content: "You answer questions based ONLY on provided notes.",
+          content: `
+You are a helpful AI assistant.
+
+- If notes are provided, try to answer from them.
+- If the answer is NOT in notes, answer normally using your knowledge.
+- Never say "No notes available".
+- Give clear and helpful answers.
+          `,
         },
         {
           role: "user",
-          content: `
-Use the following notes to answer the question.
+          content: hasNotes
+            ? `
+Use the notes if relevant.
 
 NOTES:
 """${context}"""
@@ -108,17 +115,22 @@ NOTES:
 QUESTION:
 ${question}
 
-Answer in simple sentences.
-If answer not found, say "Not in notes".
-          `,
+If answer is not in notes, answer normally.
+            `
+            : `
+Answer this question normally:
+
+${question}
+            `,
         },
       ],
-      temperature: 0.3,
+      temperature: 0.5,
     });
-    console.log("QUESTION:", question);
-    console.log("CONTEXT LENGTH:", context.length);
 
-    return response?.choices?.[0]?.message?.content || "No answer found";
+    console.log("QUESTION:", question);
+    console.log("CONTEXT LENGTH:", context?.length || 0);
+
+    return response?.choices?.[0]?.message?.content || "No answer generated";
   } catch (error) {
     console.log("AI Q&A error:", error.message);
     return "Error getting answer";

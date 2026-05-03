@@ -9,20 +9,47 @@ export const askFromNotes = async (req, res) => {
       return res.status(400).json({ message: "Question is required" });
     }
 
-    // user all notes
+    // 🔥 Step 1: user notes fetch
     const notes = await Note.find({ user: req.user.id });
 
-    // combine all user notes
-    const context = notes.map((note) => note.extractedText).join("\n");
+    // 🔥 Step 2: combine notes safely
+    const context = notes.map((note) => note.extractedText || "").join("\n");
 
-    // AI call
-    const answer = await askQuestion(context, question);
+    console.log("QUESTION:", question);
+    console.log("CONTEXT LENGTH:", context.length);
+
+    let answer;
+
+    // 🔥 Step 3: HYBRID LOGIC (SAFE)
+    if (!context || context.trim().length < 50) {
+      // ❌ No notes → normal AI
+      answer = await askQuestion("", question);
+    } else {
+      // ✅ Notes exist → smart prompt
+      const smartPrompt = `
+You are a helpful AI assistant.
+
+1. Try to answer using the user's notes.
+2. If notes do not contain the answer, answer normally.
+
+Notes:
+${context}
+
+Question:
+${question}
+
+Answer:
+`;
+
+      answer = await askQuestion(smartPrompt, question);
+    }
 
     res.json({
       question,
       answer,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("AI Q&A error:", error.message);
+    res.status(500).json({ error: "AI error" });
   }
 };
