@@ -1,6 +1,8 @@
 import Note from "../models/note.model.js";
 import { generateSummary } from "../config/ai.js";
 
+import { createNotification } from "../utils/createNotification.js";
+
 //Create Note
 export const createNote = async (req, res) => {
   try {
@@ -26,6 +28,8 @@ export const createNote = async (req, res) => {
     let extractedText = content; //For devlopment use only. Baad me change krna hai pdf-parse se
     let summary = await generateSummary(extractedText);
 
+    await createNotification(req.user.id, "AI summary generated 🤖");
+
     console.log("CONTENT:", content);
     console.log("EXTRACTED:", extractedText);
 
@@ -38,6 +42,8 @@ export const createNote = async (req, res) => {
       extractedText,
       summary, // 🔥 new field
     });
+
+    await createNotification(req.user.id, "New note created 📄");
 
     res.status(201).json({
       message: "Note created successfully",

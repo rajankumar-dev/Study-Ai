@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import aiRoutes from "./routes/ai.route.js";
+import notificationRoutes from "./routes/notification.route.js";
 
 const app = express();
 app.use(cors());
@@ -22,6 +23,8 @@ app.use("/api/files", uploadRoutes);
 app.use("/api/users", userRoutes);
 
 app.use("/uploads", express.static("uploads"));
+
+app.use("/api/notifications", notificationRoutes);
 
 app.use("/api/ai", aiRoutes);
 const PORT = process.env.PORT || 5000;
