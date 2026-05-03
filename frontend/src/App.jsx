@@ -7,6 +7,7 @@ import CreateNote from "./pages/CreateNote";
 import Notes from "./pages/Notes";
 import Login from "./pages/Login";
 import Signup from "./pages/Sign";
+import Profile from "./pages/Profile";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -25,6 +26,7 @@ function App() {
         <Route path="/notes" element={<Layout><Notes /></Layout>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

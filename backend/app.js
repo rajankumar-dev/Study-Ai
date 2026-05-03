@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/notes", notesRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/files", uploadRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api/user", userRoutes);
 
 app.use("/uploads", express.static("uploads"));
 

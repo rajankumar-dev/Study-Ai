@@ -58,3 +58,20 @@ export const deleteProfilePic = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getUserProfile = async (req, res) => {
+  const user = await User.findById(req.user.id).select("-password");
+  res.json(user);
+};
+
+export const updateUserProfile = async (req, res) => {
+  const { name, email } = req.body;
+
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    { name, email },
+    { new: true },
+  ).select("-password");
+
+  res.json(user);
+};
