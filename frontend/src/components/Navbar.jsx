@@ -2,6 +2,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { FaBell } from "react-icons/fa";
+import { getNotifications } from './../api/notificationApi';
 
 export default function Navbar() {
     const { user, logout } = useAuth();
@@ -60,7 +61,7 @@ export default function Navbar() {
                 <div className="relative" ref={notifyRef}>
                     <button
                         onClick={() => setNotifyOpen(!notifyOpen)}
-                        className="relative text-xl text-gray-600 hover:text-black"
+                        className="relative text-xl text-gray-600 hover:text-black cursor-pointer"
                     >
                         <FaBell />
 
