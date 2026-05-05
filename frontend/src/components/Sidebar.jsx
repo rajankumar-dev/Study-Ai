@@ -7,7 +7,7 @@ export default function Sidebar() {
         { name: "Dashboard", path: "/dashboard", icon: <FaHome /> },
         { name: "My Notes", path: "/notes", icon: <FaBook /> },
         { name: "AI Chat", path: "/chat", icon: <FaRobot /> },
-        { name: "Upload Notes", path: "/create", icon: <FaUpload /> },
+        { name: "Upload Notes", path: "/upload", icon: <FaUpload /> },
     ];
 
     return (
