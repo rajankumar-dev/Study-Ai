@@ -2,13 +2,13 @@ import UploadBox from "../components/UploadBox";
 import ProgressBar from "../components/ProgressBar";
 import axios from "axios";
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom"; // (optional for next step)
+import { useNavigate } from "react-router-dom"; // (optional for next step)
 
 export default function UploadPage() {
 
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
-    // const navigate = useNavigate(); // (optional)
+    const navigate = useNavigate(); // (optional)
 
     const handleUpload = async (file) => {
         if (!file) return;
@@ -52,7 +52,7 @@ export default function UploadPage() {
 
             // ✅ NEXT STEP (when noteId comes from backend)
             alert("Note created successfully");
-            navigate(`/notes/${res.data.noteId}`);
+            navigate(`notes/${res.data.noteId}`);
 
 
         } catch (err) {
