@@ -71,8 +71,8 @@ export default function Notes() {
                                 setShowChat(false); // ✅ important
                             }}
                             className={`p-3 rounded-lg cursor-pointer ${selectedNote?._id === note._id
-                                    ? "bg-blue-500 text-white"
-                                    : "hover:bg-gray-200"
+                                ? "bg-blue-500 text-white"
+                                : "hover:bg-gray-200"
                                 }`}
                         >
                             {note.title}
@@ -92,21 +92,21 @@ export default function Notes() {
                         <div className="flex gap-3 mb-4">
                             <button
                                 onClick={handleSummary}
-                                className="bg-blue-500 text-white px-4 py-2 rounded"
+                                className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
                             >
                                 Summarize
                             </button>
 
                             <button
                                 onClick={() => setShowChat(true)}
-                                className="bg-green-500 text-white px-4 py-2 rounded"
+                                className="bg-green-500 text-white px-4 py-2 rounded cursor-pointer"
                             >
                                 Ask AI
                             </button>
 
                             <button
                                 onClick={() => handleDelete(selectedNote._id)}
-                                className="bg-red-500 text-white px-4 py-2 rounded"
+                                className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer"
                             >
                                 Delete
                             </button>
