@@ -51,7 +51,9 @@ export default function UploadPage() {
             alert("✅ File uploaded successfully");
 
             // ✅ NEXT STEP (when noteId comes from backend)
-            // navigate(`/notes/${res.data.noteId}`);
+            alert("Note created successfully");
+            navigate(`/notes/${res.data.noteId}`);
+
 
         } catch (err) {
             console.error(err);
