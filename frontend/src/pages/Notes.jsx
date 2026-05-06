@@ -26,7 +26,7 @@ export default function Notes() {
         }
     };
 
-    // 🔥 SUMMARY
+    // SUMMARY
     const handleSummary = async () => {
         try {
             const res = await axios.post(
@@ -46,7 +46,7 @@ export default function Notes() {
         }
     };
 
-    // 🔥 DELETE
+    // DELETE
     const handleDelete = async (id) => {
         await deleteNote(id);
         fetchNotes();
@@ -112,7 +112,7 @@ export default function Notes() {
                             </button>
                         </div>
 
-                        {/* 🔥 MAIN VIEW SWITCH */}
+                        {/* MAIN VIEW SWITCH */}
                         {showChat ? (
                             // ✅ CHAT VIEW
                             <div className="bg-white p-6 rounded-xl shadow h-full flex flex-col">

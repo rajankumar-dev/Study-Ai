@@ -46,8 +46,8 @@ export default function Chat() {
                     >
                         <div
                             className={`px-4 py-2 rounded-xl max-w-md ${msg.type === "user"
-                                    ? "bg-blue-500 text-white"
-                                    : "bg-white shadow"
+                                ? "bg-blue-500 text-white"
+                                : "bg-white shadow"
                                 }`}
                         >
                             {/* 🔥 YAHAN CHANGE */}
@@ -60,7 +60,7 @@ export default function Chat() {
 
             </div>
 
-            {/* Input */}
+            {/* Input for ai */}
             <div className="flex gap-2 mt-3">
                 <input
                     type="text"

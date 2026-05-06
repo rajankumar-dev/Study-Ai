@@ -6,7 +6,7 @@ export const getNotes = async () => {
   return res.data;
 };
 
-// Delete note
+// Delete note by id
 export const deleteNote = async (id) => {
   const res = await API.delete(`/notes/${id}`);
   return res.data;
