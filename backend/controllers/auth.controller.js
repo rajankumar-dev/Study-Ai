@@ -41,7 +41,7 @@ export async function loginUser(req, res) {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    return res.status(404).json({ message: "User not found check credential" });
   }
 
   const hashPassword = crypto.createHash("sha256").digest("hex");
