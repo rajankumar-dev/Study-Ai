@@ -2,15 +2,15 @@ import express from "express";
 import protect from "../middlewares/auth.middleware.js";
 import { askFromNotes } from "../controllers/ai.controller.js";
 
-// ✅ NEW IMPORT
+// NEW IMPORT
 import { generateSummary } from "../config/ai.js";
 
 const router = express.Router();
 
-// ✅ EXISTING
+// EXISTING
 router.post("/ask", protect, askFromNotes);
 
-// 🔥 ADD THIS (SUMMARY ROUTE)
+//  ADD THIS (SUMMARY ROUTE)
 router.post("/summary", protect, async (req, res) => {
   try {
     const { text } = req.body;

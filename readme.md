@@ -1,1 +1,1 @@
-# StudyAi - Personal Ai study Assistant
+# StudyAi - Personal Ai study Assistant SELF
