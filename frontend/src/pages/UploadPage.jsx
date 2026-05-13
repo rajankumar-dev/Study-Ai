@@ -13,7 +13,7 @@ export default function UploadPage() {
     const handleUpload = async (file) => {
         if (!file) return;
 
-        // ✅ FILE TYPE VALIDATION
+        // FILE TYPE VALIDATION
         if (
             file.type !== "application/pdf" &&
             file.type !== "text/plain"
@@ -45,12 +45,12 @@ export default function UploadPage() {
                 }
             );
 
-            console.log("✅ Upload Response:", res.data);
+            console.log("Upload Response:", res.data);
 
-            // ✅ SUCCESS MESSAGE
-            alert("✅ File uploaded successfully");
+            // SUCCESS MESSAGE
+            alert("File uploaded successfully");
 
-            // ✅ NEXT STEP (when noteId comes from backend)
+            // NEXT STEP (when noteId comes from backend)
             alert("Note created successfully");
             navigate(`notes/${res.data.noteId}`);
 
@@ -58,7 +58,7 @@ export default function UploadPage() {
         } catch (err) {
             console.error(err);
 
-            // ✅ ERROR MESSAGE
+            // ERROR MESSAGE
             alert(err.response?.data?.message || "❌ Upload failed");
         } finally {
             setLoading(false);
