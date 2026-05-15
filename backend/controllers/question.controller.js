@@ -1,8 +1,12 @@
 import Groq from "groq-sdk";
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+// Lazy init function
+const getClient = () => {
+  return new Groq({
+    apiKey: process.env.GROQ_API_KEY,
+  });
+  console.log(process.env.GROQ_API_KEY);
+};
 
 export const generateQuestions = async (req, res) => {
   try {
@@ -14,7 +18,7 @@ export const generateQuestions = async (req, res) => {
       });
     }
 
-    const completion = await groq.chat.completions.create({
+    const completion = await Groq.chat.completion.create({
       messages: [
         {
           role: "system",
