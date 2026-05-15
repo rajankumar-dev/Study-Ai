@@ -46,7 +46,7 @@ export default function Home() {
                 <div className="bg-green-200 p-6 rounded-xl shadow-md flex flex-col justify-between hover:shadow-lg transition duration-200 ">
                     <h2 className="text-gray-700">Generated Questions</h2>
                     <p className="text-3xl font-bold mt-1">
-                        Coming Soon
+                        {notes.filter(n => n.questions).length}
                     </p>
                 </div>
             </div>
