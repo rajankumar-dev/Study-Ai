@@ -127,7 +127,7 @@ export default function Notes() {
                             </div>
                         ) : (
                             // ✅ NOTE VIEW
-                            <div className="bg-white p-6 rounded-xl shadow max-h-[500px] overflow-y-auto">
+                            <div className="bg-white p-6 rounded-xl shadow max-h-[500] overflow-y-auto">
                                 <h2 className="text-2xl font-bold mb-2">
                                     {selectedNote.title}
                                 </h2>

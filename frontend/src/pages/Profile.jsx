@@ -26,7 +26,7 @@ export default function Profile() {
         console.log("Update clicked");
         const updated = await updateProfile(form);
 
-        // 🔥 update context + localStorage
+        // update context + localStorage
         login(localStorage.getItem("token"), updated);
 
         alert("Profile updated");

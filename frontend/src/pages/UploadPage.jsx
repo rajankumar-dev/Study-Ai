@@ -13,7 +13,7 @@ export default function UploadPage() {
     const handleUpload = async (file) => {
         if (!file) return;
 
-        // FILE TYPE VALIDATION
+        // FILE TYPE VALIDATION suggest
         if (
             file.type !== "application/pdf" &&
             file.type !== "text/plain"
