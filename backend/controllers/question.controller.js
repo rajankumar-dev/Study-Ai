@@ -1,47 +1,59 @@
 import Groq from "groq-sdk";
 
-// Lazy init function
+// ✅ Lazy init function
 const getClient = () => {
   return new Groq({
     apiKey: process.env.GROQ_API_KEY,
   });
-  console.log(process.env.GROQ_API_KEY);
 };
 
 export const generateQuestions = async (req, res) => {
   try {
     const { text } = req.body;
 
+    // ✅ validation
     if (!text) {
       return res.status(400).json({
         message: "Text is required",
       });
     }
 
-    const completion = await Groq.chat.completion.create({
+    // ✅ initialize client
+    const groq = getClient();
+
+    // ✅ generate questions
+    const completion = await groq.chat.completions.create({
       messages: [
         {
           role: "system",
           content:
-            "Generate 10 important study questions from the provided notes.",
+            "Generate 10 important study questions from the provided notes. Return only numbered questions.",
         },
         {
           role: "user",
           content: text,
         },
       ],
-      model: "llama3-8b-8192",
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
+      max_tokens: 700,
     });
 
-    const questions = completion.choices[0]?.message?.content;
+    // ✅ extract response
+    const questions =
+      completion.choices?.[0]?.message?.content || "No questions generated";
 
+    // ✅ send response
     res.status(200).json({
+      success: true,
       questions,
     });
   } catch (error) {
-    console.log(error);
+    console.log("QUESTION GENERATION ERROR:", error);
+
     res.status(500).json({
-      message: error.message,
+      success: false,
+      message: error.message || "Question generation failed",
     });
   }
 };
