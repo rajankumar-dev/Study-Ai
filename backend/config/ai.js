@@ -37,15 +37,16 @@
 // We are using groq-ai free ai summary extracter
 import Groq from "groq-sdk";
 
-// Lazy init function
+// ✅ Lazy client init
 const getClient = () => {
+  console.log("GROQ KEY:", process.env.GROQ_API_KEY ? "Loaded" : "Missing");
+
   return new Groq({
     apiKey: process.env.GROQ_API_KEY,
   });
-  console.log(process.env.GROQ_API_KEY);
 };
 
-// Summary function
+// ✅ SUMMARY FUNCTION
 export const generateSummary = async (text) => {
   try {
     const client = getClient();
@@ -56,75 +57,90 @@ export const generateSummary = async (text) => {
     }
 
     const response = await client.chat.completions.create({
-      model: "llama-3.1-8b-instant",
+      model: "llama-3.3-70b-versatile",
+
       messages: [
         {
           role: "system",
-          content: "You are an AI that summarizes text.",
+          content:
+            "You summarize study notes into short and easy bullet points.",
         },
         {
           role: "user",
-          content: `Summarize the following content in 3-5 SHORT bullet points.
-ONLY return bullet points. No extra text.
+          content: `
+Summarize this content into 3-5 short bullet points.
 
-${text}`,
+ONLY return bullet points.
+
+CONTENT:
+${text}
+          `,
         },
       ],
+
       temperature: 0.5,
+      max_tokens: 500,
     });
 
     const result = response?.choices?.[0]?.message?.content;
 
     return result || "Summary not generated";
   } catch (error) {
-    console.log("Groq error:", error.message);
+    console.log("SUMMARY ERROR:", error);
+
     return "Summary not available";
   }
 };
 
+// ✅ ASK AI FUNCTION
 export const askQuestion = async (context, question) => {
   try {
     const client = getClient();
 
-    // 🔥 smart fallback
     const hasNotes = context && context.trim().length > 50;
 
     const response = await client.chat.completions.create({
-      model: "llama-3.1-8b-instant",
+      model: "llama-3.3-70b-versatile",
+
       messages: [
         {
           role: "system",
           content: `
-You are a helpful AI assistant.
+You are StudyAI assistant.
 
-- If notes are provided, try to answer from them.
-- If the answer is NOT in notes, answer normally using your knowledge.
+Rules:
+- If notes are provided, prioritize notes.
+- If answer is not available in notes, answer using general knowledge.
 - Never say "No notes available".
-- Give clear and helpful answers.
+- Give clean, student-friendly answers.
+- Keep answers clear and concise.
           `,
         },
+
         {
           role: "user",
           content: hasNotes
             ? `
-Use the notes if relevant.
-
 NOTES:
-"""${context}"""
+${context}
 
 QUESTION:
 ${question}
 
-If answer is not in notes, answer normally.
-            `
+Answer the question using notes if relevant.
+If notes do not contain the answer, answer normally.
+`
             : `
-Answer this question normally:
-
+QUESTION:
 ${question}
-            `,
+
+Answer normally.
+`,
         },
       ],
-      temperature: 0.5,
+
+      temperature: 0.6,
+      max_tokens: 800,
     });
 
     console.log("QUESTION:", question);
@@ -132,7 +148,8 @@ ${question}
 
     return response?.choices?.[0]?.message?.content || "No answer generated";
   } catch (error) {
-    console.log("AI Q&A error:", error.message);
+    console.log("AI Q&A ERROR:", error);
+
     return "Error getting answer";
   }
 };
