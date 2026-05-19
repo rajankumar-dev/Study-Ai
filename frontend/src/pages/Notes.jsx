@@ -117,8 +117,8 @@ export default function Notes() {
                             className={`p-4 rounded-2xl cursor-pointer transition-all duration-200 border
                             
                         ${selectedNote?._id === note._id
-                                    ? "bg-blue-500 text-white shadow-lg border-blue-500 scale-[1.02]"
-                                    : "bg-white hover:bg-gray-50 border-gray-200 hover:shadow-md"
+                                    ? "bg-blue-100 text-blue-600 shadow-lg border-blue-200 scale-[1.02]"
+                                    : "bg-white hover:bg-gray-100 border-gray-200 hover:shadow-md"
                                 }`}
                         >
 
@@ -129,7 +129,7 @@ export default function Notes() {
                             <p className={`text-sm mt-2 line-clamp-2
                             
                         ${selectedNote?._id === note._id
-                                    ? "text-blue-100"
+                                    ? "text-blue-600"
                                     : "text-gray-500"
                                 }`}
                             >
