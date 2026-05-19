@@ -52,7 +52,7 @@ export default function UploadPage() {
 
             // NEXT STEP (when noteId comes from backend)
             alert("Note created successfully");
-            navigate(`notes/${res.data.noteId}`);
+            navigate(`/notes`);
 
 
         } catch (err) {
