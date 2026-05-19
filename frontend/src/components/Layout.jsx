@@ -15,7 +15,7 @@ export default function Layout({ children }) {
 
                 <Navbar />
 
-                <div className="p-6 overflow-y-auto">
+                <div className="p-8 overflow-y-auto">
                     {children}
                 </div>
 
