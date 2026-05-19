@@ -66,7 +66,7 @@ export default function Chat() {
         <div className="h-[calc(100vh-90px)] flex flex-col bg-white rounded-3xl shadow-md overflow-hidden">
 
             {/* HEADER */}
-            <div className="px-7 py-5 border-b bg-gradient-to-r from-blue-500 to-indigo-500 text-white flex items-center justify-between">
+            <div className="px-7 py-5  bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-600 flex items-center justify-between">
 
                 <div>
 
@@ -80,7 +80,7 @@ export default function Chat() {
 
                 </div>
 
-                <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-xl font-bold border border-white/30">
+                <div className="w-12 h-12 rounded-full bg-blue-400 backdrop-blur flex items-center justify-center text-xl font-bold border border-white/30">
                     🤖
                 </div>
 
@@ -117,15 +117,15 @@ export default function Chat() {
                     <div
                         key={i}
                         className={`flex ${msg.type === "user"
-                                ? "justify-end"
-                                : "justify-start"
+                            ? "justify-end"
+                            : "justify-start"
                             }`}
                     >
 
                         <div
                             className={`max-w-[75%] px-5 py-4 rounded-3xl shadow-sm whitespace-pre-line leading-7 ${msg.type === "user"
-                                    ? "bg-blue-500 text-white rounded-br-md"
-                                    : "bg-white border border-gray-200 text-gray-700 rounded-bl-md"
+                                ? "bg-blue-500 text-white rounded-br-md"
+                                : "bg-white border border-gray-200 text-gray-700 rounded-bl-md"
                                 }`}
                         >
 
@@ -141,7 +141,7 @@ export default function Chat() {
 
                     <div className="flex justify-start">
 
-                        <div className="bg-white border border-gray-200 px-5 py-4 rounded-3xl rounded-bl-md shadow-sm">
+                        <div className="bg-white border border-gray-300 px-5 py-4 rounded-3xl rounded-bl-md shadow-sm">
 
                             <div className="flex gap-2">
 
@@ -163,7 +163,7 @@ export default function Chat() {
             </div>
 
             {/* INPUT AREA */}
-            <div className="p-5 bg-white border-t">
+            <div className="p-5 bg-white">
 
                 <div className="flex items-center gap-3">
 
