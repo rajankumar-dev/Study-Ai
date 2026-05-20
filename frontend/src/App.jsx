@@ -10,6 +10,7 @@ import Signup from "./pages/Sign";
 import Profile from "./pages/Profile";
 import UploadPage from "./pages/UploadPage";
 import Favorites from "./pages/Favorites";
+import Settings from "./pages/Settings";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -38,7 +39,12 @@ function App() {
             </Layout>
           }
         />
+        <Route
+          path="/settings"
+          element={<Layout><Settings /></Layout>}
+        />
       </Routes>
+
     </BrowserRouter>
   );
 }

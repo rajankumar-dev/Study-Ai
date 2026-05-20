@@ -253,12 +253,12 @@ export default function Navbar() {
                                 👤 Profile
                             </button>
 
-                            <button
+                            {/* <button
                                 onClick={() => navigate("/settings")}
                                 className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-xl text-sm transition"
                             >
                                 ⚙️ Settings
-                            </button>
+                            </button> */}
 
                             <div className="h-px bg-gray-200 my-2"></div>
 
