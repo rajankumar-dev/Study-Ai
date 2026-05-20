@@ -186,7 +186,7 @@ export default function Navbar() {
 
                                         <div
                                             key={note._id}
-                                            className={`p-4 border-b border-gray-100 hover:bg-gray-50 transition
+                                            className={`p-4 border-b border-gray-100 hover:bg-gray-50 transition cursor-pointer
                                                 
                                                 ${note.read
                                                     ? "bg-white"
@@ -248,23 +248,23 @@ export default function Navbar() {
 
                             <button
                                 onClick={() => navigate("/profile")}
-                                className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-xl text-sm transition"
+                                className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-xl cursor-pointer text-sm transition"
                             >
                                 👤 Profile
                             </button>
 
-                            {/* <button
+                            <button
                                 onClick={() => navigate("/settings")}
-                                className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-xl text-sm transition"
+                                className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-xl text-sm transition cursor-pointer"
                             >
                                 ⚙️ Settings
-                            </button> */}
+                            </button>
 
                             <div className="h-px bg-gray-200 my-2"></div>
 
                             <button
                                 onClick={handleLogout}
-                                className="w-full text-left px-4 py-3 hover:bg-red-50 text-red-500 rounded-xl text-sm transition"
+                                className="w-full text-left px-4 py-3 hover:bg-red-50 text-red-500 rounded-xl text-sm transition cursor-pointer"
                             >
                                 🚪 Logout
                             </button>
