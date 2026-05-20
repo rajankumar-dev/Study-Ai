@@ -58,7 +58,7 @@ export default function Settings() {
                             />
                         </div>
 
-                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-2xl transition">
+                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-2xl transition cursor-pointer">
                             Save Changes
                         </button>
 
@@ -89,7 +89,7 @@ export default function Settings() {
 
                         <button
                             onClick={() => setDarkMode(!darkMode)}
-                            className={`w-14 h-8 rounded-full transition relative ${darkMode
+                            className={`w-14 h-8 rounded-full cursor-pointer transition relative ${darkMode
                                 ? "bg-blue-500"
                                 : "bg-gray-300"
                                 }`}
@@ -133,7 +133,7 @@ export default function Settings() {
                             onClick={() =>
                                 setNotifications(!notifications)
                             }
-                            className={`w-14 h-8 rounded-full transition relative ${notifications
+                            className={`w-14 h-8 rounded-full cursor-pointer transition relative ${notifications
                                 ? "bg-green-500"
                                 : "bg-gray-300"
                                 }`}
@@ -161,11 +161,11 @@ export default function Settings() {
 
                     <div className="space-y-3">
 
-                        <button className="w-full border rounded-2xl py-3 hover:bg-gray-50 transition">
+                        <button className="w-full border rounded-2xl py-3 hover:bg-gray-50 transition cursor-pointer">
                             Change Password
                         </button>
 
-                        <button className="w-full border border-red-200 text-red-500 rounded-2xl py-3 hover:bg-red-50 transition">
+                        <button className="w-full border border-red-200 text-red-500 rounded-2xl py-3 hover:bg-red-50 transition cursor-pointer">
                             Delete Account
                         </button>
 
