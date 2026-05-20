@@ -26,7 +26,7 @@ export default function Settings() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {/* Profile Settings */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border">
+                <div className="bg-white rounded-3xl p-6 shadow-sm ">
 
                     <h2 className="text-xl font-semibold mb-5">
                         Profile
@@ -67,7 +67,7 @@ export default function Settings() {
                 </div>
 
                 {/* Appearance */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border">
+                <div className="bg-white rounded-3xl p-6 shadow-sm">
 
                     <h2 className="text-xl font-semibold mb-5">
                         Appearance
@@ -90,15 +90,15 @@ export default function Settings() {
                         <button
                             onClick={() => setDarkMode(!darkMode)}
                             className={`w-14 h-8 rounded-full transition relative ${darkMode
-                                    ? "bg-blue-500"
-                                    : "bg-gray-300"
+                                ? "bg-blue-500"
+                                : "bg-gray-300"
                                 }`}
                         >
 
                             <div
                                 className={`absolute top-1 w-6 h-6 bg-white rounded-full transition ${darkMode
-                                        ? "left-7"
-                                        : "left-1"
+                                    ? "left-7"
+                                    : "left-1"
                                     }`}
                             ></div>
 
@@ -109,7 +109,7 @@ export default function Settings() {
                 </div>
 
                 {/* Notifications */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border">
+                <div className="bg-white rounded-3xl p-6 shadow-sm">
 
                     <h2 className="text-xl font-semibold mb-5">
                         Notifications
@@ -134,15 +134,15 @@ export default function Settings() {
                                 setNotifications(!notifications)
                             }
                             className={`w-14 h-8 rounded-full transition relative ${notifications
-                                    ? "bg-green-500"
-                                    : "bg-gray-300"
+                                ? "bg-green-500"
+                                : "bg-gray-300"
                                 }`}
                         >
 
                             <div
                                 className={`absolute top-1 w-6 h-6 bg-white rounded-full transition ${notifications
-                                        ? "left-7"
-                                        : "left-1"
+                                    ? "left-7"
+                                    : "left-1"
                                     }`}
                             ></div>
 
@@ -153,7 +153,7 @@ export default function Settings() {
                 </div>
 
                 {/* Security */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border">
+                <div className="bg-white rounded-3xl p-6 shadow-sm">
 
                     <h2 className="text-xl font-semibold mb-5">
                         Security
