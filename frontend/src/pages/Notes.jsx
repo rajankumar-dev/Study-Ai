@@ -1,9 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { getNotes, deleteNote } from "../features/notes/notesApi";
+import {
+    getNotes,
+    deleteNote,
+    toggleFavorite,
+} from "../features/notes/notesApi";
+
 import ChatBox from "../components/ChatBox";
 
+import {
+    FaHeart,
+    FaRegHeart,
+} from "react-icons/fa";
+
 export default function Notes() {
+
     const [notes, setNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState(null);
 
@@ -17,7 +28,9 @@ export default function Notes() {
     }, []);
 
     const fetchNotes = async () => {
+
         try {
+
             const data = await getNotes();
 
             setNotes(data.notes);
@@ -25,17 +38,24 @@ export default function Notes() {
             if (data.notes.length > 0) {
                 setSelectedNote(data.notes[0]);
             }
+
         } catch (err) {
+
             console.log("Error fetching notes", err);
+
         }
     };
 
     // SUMMARY
     const handleSummary = async () => {
+
         try {
+
             const res = await axios.post(
                 "http://localhost:4000/api/ai/summary",
-                { text: selectedNote.content },
+                {
+                    text: selectedNote.content,
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -46,17 +66,24 @@ export default function Notes() {
             setSummary(res.data.summary);
 
         } catch (err) {
+
             console.error(err);
+
             alert("Summary failed");
+
         }
     };
 
-    // GENERATE QUESTIONS
+    // QUESTIONS
     const handleQuestions = async () => {
+
         try {
+
             const res = await axios.post(
                 "http://localhost:4000/api/questions/generate",
-                { text: selectedNote.content },
+                {
+                    text: selectedNote.content,
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -67,13 +94,17 @@ export default function Notes() {
             setQuestions(res.data.questions);
 
         } catch (err) {
+
             console.error(err);
+
             alert("Question generation failed");
+
         }
     };
 
     // DELETE
     const handleDelete = async (id) => {
+
         await deleteNote(id);
 
         fetchNotes();
@@ -84,6 +115,7 @@ export default function Notes() {
     };
 
     return (
+
         <div className="flex h-[calc(100vh-70px)] bg-gray-100">
 
             {/* LEFT SIDE */}
@@ -91,6 +123,7 @@ export default function Notes() {
 
                 {/* Heading */}
                 <div className="p-5 border-b border-gray-100">
+
                     <h2 className="text-2xl font-bold text-gray-800">
                         My Notes
                     </h2>
@@ -98,60 +131,123 @@ export default function Notes() {
                     <p className="text-sm text-gray-500 mt-1">
                         {notes.length} Notes Available
                     </p>
+
                 </div>
 
                 {/* Notes List */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-3">
 
                     {notes.map((note) => (
+
                         <div
                             key={note._id}
                             onClick={() => {
+
                                 setSelectedNote(note);
 
                                 setSummary("");
                                 setQuestions("");
 
                                 setShowChat(false);
+
                             }}
                             className={`p-4 rounded-2xl cursor-pointer transition-all duration-200 border
                             
-                        ${selectedNote?._id === note._id
+                            ${selectedNote?._id === note._id
                                     ? "bg-blue-100 text-blue-600 shadow-lg border-blue-200 scale-[1.02]"
                                     : "bg-white hover:bg-gray-100 border-gray-200 hover:shadow-md"
                                 }`}
                         >
 
-                            <h3 className="font-semibold text-base truncate">
-                                {note.title}
-                            </h3>
+                            {/* TITLE + FAVORITE */}
+                            <div className="flex items-start justify-between gap-2">
 
-                            <p className={`text-sm mt-2 line-clamp-2
-                            
-                        ${selectedNote?._id === note._id
-                                    ? "text-blue-600"
-                                    : "text-gray-500"
-                                }`}
+                                <h3 className="font-semibold text-base truncate flex-1">
+                                    {note.title}
+                                </h3>
+
+                                <button
+                                    onClick={async (e) => {
+
+                                        e.stopPropagation();
+
+                                        try {
+
+                                            await toggleFavorite(note._id);
+
+                                            setNotes((prev) =>
+                                                prev.map((n) =>
+                                                    n._id === note._id
+                                                        ? {
+                                                            ...n,
+                                                            favorite: !n.favorite,
+                                                        }
+                                                        : n
+                                                )
+                                            );
+
+                                            if (selectedNote?._id === note._id) {
+
+                                                setSelectedNote({
+                                                    ...selectedNote,
+                                                    favorite: !selectedNote.favorite,
+                                                });
+
+                                            }
+
+                                        } catch (err) {
+
+                                            console.log(err);
+
+                                        }
+                                    }}
+                                    className="text-red-500 text-lg cursor-pointer"
+                                >
+
+                                    {note.favorite
+                                        ? <FaHeart />
+                                        : <FaRegHeart />
+                                    }
+
+                                </button>
+
+                            </div>
+
+                            {/* CONTENT */}
+                            <p
+                                className={`text-sm mt-2 line-clamp-2
+                                
+                                ${selectedNote?._id === note._id
+                                        ? "text-blue-600"
+                                        : "text-gray-500"
+                                    }`}
                             >
                                 {note.content}
                             </p>
 
                         </div>
+
                     ))}
 
                 </div>
+
             </div>
 
             {/* RIGHT SIDE */}
             <div className="flex-1 p-6 overflow-hidden">
 
                 {!selectedNote ? (
+
                     <div className="h-full flex items-center justify-center">
+
                         <p className="text-gray-500 text-lg">
                             No note selected
                         </p>
+
                     </div>
+
                 ) : (
+
                     <>
 
                         {/* BUTTONS */}
@@ -190,16 +286,17 @@ export default function Notes() {
                         {/* MAIN VIEW */}
                         {showChat ? (
 
-                            // CHAT VIEW
                             <div className="bg-white rounded-3xl shadow-md h-[calc(100vh-170px)] flex flex-col overflow-hidden">
 
                                 <div className="p-4 border-b border-gray-100">
+
                                     <button
                                         onClick={() => setShowChat(false)}
                                         className="text-blue-500 font-medium"
                                     >
                                         ← Back to Note
                                     </button>
+
                                 </div>
 
                                 <div className="flex-1 overflow-hidden">
@@ -210,7 +307,6 @@ export default function Notes() {
 
                         ) : (
 
-                            // NOTE VIEW
                             <div className="grid grid-cols-3 gap-6 h-[calc(100vh-170px)]">
 
                                 {/* NOTE CONTENT */}
@@ -226,7 +322,7 @@ export default function Notes() {
 
                                 </div>
 
-                                {/* AI RESULT PANEL */}
+                                {/* AI PANEL */}
                                 <div className="bg-white rounded-3xl shadow-md p-6 overflow-y-auto">
 
                                     <h2 className="text-xl font-bold text-gray-800 mb-5">
@@ -235,6 +331,7 @@ export default function Notes() {
 
                                     {/* SUMMARY */}
                                     {summary && (
+
                                         <div className="mb-6">
 
                                             <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5">
@@ -254,6 +351,7 @@ export default function Notes() {
 
                                     {/* QUESTIONS */}
                                     {questions && (
+
                                         <div>
 
                                             <div className="bg-purple-50 border border-purple-100 rounded-2xl p-5">
@@ -273,6 +371,7 @@ export default function Notes() {
 
                                     {/* EMPTY STATE */}
                                     {!summary && !questions && (
+
                                         <div className="h-full flex flex-col items-center justify-center text-center text-gray-400">
 
                                             <div className="text-5xl mb-4">
@@ -294,10 +393,15 @@ export default function Notes() {
                                 </div>
 
                             </div>
+
                         )}
+
                     </>
+
                 )}
+
             </div>
+
         </div>
     );
 }

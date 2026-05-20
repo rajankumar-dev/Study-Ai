@@ -146,3 +146,46 @@ export const getNoteById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// TOGGLE FAVORITE
+export const toggleFavorite = async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+
+    // CHECK NOTE
+    if (!note) {
+      return res.status(404).json({
+        message: "Note not found",
+      });
+    }
+
+    // CHECK USER
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).json({
+        message: "Not authorized",
+      });
+    }
+
+    // TOGGLE FAVORITE
+    note.favorite = !note.favorite;
+
+    await note.save();
+
+    // OPTIONAL NOTIFICATION
+    await createNotification(
+      req.user.id,
+      note.favorite
+        ? "Note added to favorites ❤️"
+        : "Note removed from favorites 💔",
+    );
+
+    res.status(200).json({
+      message: "Favorite updated successfully",
+      note,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};

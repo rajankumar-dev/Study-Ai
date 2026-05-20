@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Sign";
 import Profile from "./pages/Profile";
 import UploadPage from "./pages/UploadPage";
+import Favorites from "./pages/Favorites";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -29,6 +30,14 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/upload" element={<Layout><UploadPage /></Layout>} />
+        <Route
+          path="/favorites"
+          element={
+            <Layout>
+              <Favorites />
+            </Layout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
