@@ -79,7 +79,8 @@ An AI-powered study management platform that helps students organize notes, gene
 
 ### AI Integration
 
-- Google Gemini API
+- Google Gemini API (Paid)
+- Groq API (Free)
 
 ### File Upload
 
