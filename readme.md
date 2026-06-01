@@ -95,13 +95,13 @@ StudyAI/
 │
 ├── frontend/
 │   ├── src/
-    │   ├── api/
-    │   ├── assets/
-    │   ├── components/
-    │   ├── context/
-    │   ├── features/
-    │   ├── pages/
-│   ├── index.html
+│       ├── api/
+│       ├── assets/
+│       ├── components/
+│       ├── context/
+│       ├── features/
+│       ├── pages/
+
 
 │
 ├── backend/
