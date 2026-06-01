@@ -101,6 +101,7 @@ StudyAI/
     │   ├── context/
     │   ├── features/
     │   ├── pages/
+│   ├── index.html
 
 │
 ├── backend/
