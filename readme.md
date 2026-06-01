@@ -107,6 +107,8 @@ StudyAI/
 │   ├── middlewares/
 │   ├── config/
 │   └── utils/
+│   └── services/
+│   └── uploads/
 │
 └── README.md
 ```
