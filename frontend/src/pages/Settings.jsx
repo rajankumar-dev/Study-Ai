@@ -1,9 +1,104 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import {
+    updateSettings,
+    updateProfile,
+} from "../api/userApi";
 
 export default function Settings() {
 
+    const { user } = useAuth();
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+
     const [darkMode, setDarkMode] = useState(false);
     const [notifications, setNotifications] = useState(true);
+
+    const [loading, setLoading] = useState(false);
+
+    // LOAD USER DATA
+    useEffect(() => {
+
+        if (user) {
+            setName(user.name || "");
+            setEmail(user.email || "");
+        }
+
+        // LOCAL STORAGE SETTINGS
+        const savedDark = localStorage.getItem("darkMode");
+        const savedNotify = localStorage.getItem("notifications");
+
+        if (savedDark !== null) {
+            setDarkMode(savedDark === "true");
+        }
+
+        if (savedNotify !== null) {
+            setNotifications(savedNotify === "true");
+        }
+
+    }, [user]);
+
+    // SAVE SETTINGS
+    const handleSave = async () => {
+
+        try {
+
+            setLoading(true);
+
+            // PROFILE UPDATE
+            await updateProfile({
+                name,
+                email,
+            });
+
+            // SETTINGS UPDATE
+            await updateSettings({
+                darkMode,
+                notifications,
+            });
+
+            // LOCAL STORAGE
+            localStorage.setItem("darkMode", darkMode);
+            localStorage.setItem("notifications", notifications);
+
+            alert("✅ Settings updated successfully");
+
+        } catch (err) {
+
+            console.log(err);
+
+            alert("❌ Failed to update settings");
+
+        } finally {
+
+            setLoading(false);
+
+        }
+    };
+
+    // APPLY DARK MODE
+    useEffect(() => {
+
+        if (darkMode) {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+
+    }, [darkMode]);
+
+
+    // DARK MODE APPLY
+    useEffect(() => {
+
+        if (darkMode) {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+
+    }, [darkMode]);
 
     return (
 
@@ -26,7 +121,7 @@ export default function Settings() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {/* Profile Settings */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm ">
+                <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
 
                     <h2 className="text-xl font-semibold mb-5">
                         Profile
@@ -41,7 +136,9 @@ export default function Settings() {
 
                             <input
                                 type="text"
-                                placeholder="Rajan Kumar"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Enter name"
                                 className="w-full mt-1 border rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
@@ -53,13 +150,19 @@ export default function Settings() {
 
                             <input
                                 type="email"
-                                placeholder="rajan@gmail.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Enter email"
                                 className="w-full mt-1 border rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
 
-                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-2xl transition cursor-pointer">
-                            Save Changes
+                        <button
+                            onClick={handleSave}
+                            disabled={loading}
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-2xl transition cursor-pointer disabled:opacity-50"
+                        >
+                            {loading ? "Saving..." : "Save Changes"}
                         </button>
 
                     </div>
@@ -67,7 +170,7 @@ export default function Settings() {
                 </div>
 
                 {/* Appearance */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm">
+                <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
 
                     <h2 className="text-xl font-semibold mb-5">
                         Appearance
@@ -109,7 +212,7 @@ export default function Settings() {
                 </div>
 
                 {/* Notifications */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm">
+                <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
 
                     <h2 className="text-xl font-semibold mb-5">
                         Notifications
@@ -153,7 +256,7 @@ export default function Settings() {
                 </div>
 
                 {/* Security */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm">
+                <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
 
                     <h2 className="text-xl font-semibold mb-5">
                         Security
@@ -161,11 +264,27 @@ export default function Settings() {
 
                     <div className="space-y-3">
 
-                        <button className="w-full border rounded-2xl py-3 hover:bg-gray-50 transition cursor-pointer">
+                        <button
+                            className="w-full border rounded-2xl py-3 hover:bg-gray-50 transition cursor-pointer"
+                            onClick={() =>
+                                alert("🔒 Change password feature coming soon")
+                            }
+                        >
                             Change Password
                         </button>
 
-                        <button className="w-full border border-red-200 text-red-500 rounded-2xl py-3 hover:bg-red-50 transition cursor-pointer">
+                        <button
+                            className="w-full border border-red-200 text-red-500 rounded-2xl py-3 hover:bg-red-50 transition cursor-pointer"
+                            onClick={() => {
+                                const confirmDelete = window.confirm(
+                                    "Are you sure you want to delete your account?"
+                                );
+
+                                if (confirmDelete) {
+                                    alert("⚠️ Delete account feature coming soon");
+                                }
+                            }}
+                        >
                             Delete Account
                         </button>
 

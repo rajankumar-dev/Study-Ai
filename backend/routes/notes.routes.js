@@ -5,18 +5,30 @@ import {
   deleteNote,
   updateNote,
   getNoteById,
+  toggleFavorite,
 } from "../controllers/notes.controller.js";
+
 import upload from "../config/multer.js";
 import protect from "../middlewares/auth.middleware.js";
-import { toggleFavorite } from "../controllers/notes.controller.js";
 
 const router = express.Router();
 
+// CREATE NOTE
 router.post("/", protect, upload.single("file"), createNote);
+
+// GET ALL NOTES
 router.get("/", protect, getNotes);
-router.get("/:id", protect, getNoteById);
-router.put("/:id", protect, updateNote);
-router.delete("/:id", protect, deleteNote);
+
+// ⭐ FAVORITE ROUTE
 router.put("/favorite/:id", protect, toggleFavorite);
+
+// GET SINGLE NOTE
+router.get("/:id", protect, getNoteById);
+
+// UPDATE NOTE
+router.put("/:id", protect, updateNote);
+
+// DELETE NOTE
+router.delete("/:id", protect, deleteNote);
 
 export default router;
