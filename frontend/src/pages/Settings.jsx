@@ -62,8 +62,9 @@ export default function Settings() {
             // UPDATE AUTH CONTEXT
             login(
                 localStorage.getItem("token"),
-                updatedUser
+                updatedUser.user
             );
+            console.log(updatedUser);
 
             // SAVE LOCAL SETTINGS
             localStorage.setItem("darkMode", darkMode);

@@ -44,9 +44,7 @@ function App() {
           element={<Layout><Settings /></Layout>}
         />
       </Routes>
-      <div className="bg-white dark:bg-black text-black dark:text-white p-10">
-        Test Dark Mode
-      </div>
+
 
     </BrowserRouter>
   );

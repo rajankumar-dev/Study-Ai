@@ -104,13 +104,13 @@ export default function Navbar() {
 
     return (
 
-        <div className="h-20 bg-white border-b border-gray-200 px-8 flex items-center justify-between">
+        <div className="min-h-20 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 md:px-8 flex items-center justify-between">
 
             {/* LEFT SIDE */}
             <div className="flex items-center gap-5">
 
                 {/* MENU ICON */}
-                <button className="text-gray-400 hover:text-gray-600 text-lg">
+                <button className="text-gray-400 dark:text-gray-300 hover:text-gray-600 text-lg">
 
                     <FaBars />
 
@@ -119,7 +119,7 @@ export default function Navbar() {
                 {/* PAGE TITLE */}
                 <div>
 
-                    <h1 className="text-xl font-bold text-gray-800">
+                    <h1 className="text-lg md:text-xl font-bold text-gray-800 dark:text-white">
                         {getPageTitle()}
                     </h1>
 
@@ -128,10 +128,10 @@ export default function Navbar() {
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3 md:gap-6">
 
                 {/* SEARCH */}
-                <button className="text-gray-400 hover:text-gray-600 text-lg transition">
+                <button className="hidden sm:block text-gray-400 dark:text-gray-300 hover:text-gray-600 text-lg transition">
 
                     <FaSearch />
 
@@ -142,7 +142,7 @@ export default function Navbar() {
 
                     <button
                         onClick={() => setNotifyOpen(!notifyOpen)}
-                        className="relative text-gray-400 hover:text-gray-600 text-lg transition cursor-pointer"
+                        className="relative text-gray-400 dark:text-gray-300 hover:text-gray-600 dark:hover:text-white text-lg transition cursor-pointer"
                     >
 
                         <FaBell />
@@ -162,11 +162,11 @@ export default function Navbar() {
                     {/* NOTIFICATION DROPDOWN */}
                     {notifyOpen && (
 
-                        <div className="absolute right-0 mt-4 w-80 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 overflow-hidden">
+                        <div className="absolute right-0 mt-4 w-72 md:w-80 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl z-50 overflow-hidden">
 
-                            <div className="p-4 border-b border-gray-100">
+                            <div className="p-4 border-b border-gray-100 dark:border-gray-700">
 
-                                <h3 className="font-semibold text-gray-700">
+                                <h3 className="font-semibold text-gray-700 dark:text-white">
                                     Notifications
                                 </h3>
 
@@ -176,7 +176,7 @@ export default function Navbar() {
 
                                 {notifications.length === 0 ? (
 
-                                    <p className="p-4 text-sm text-gray-500">
+                                    <p className="p-4 text-sm text-gray-700 dark:text-gray-200 leading-6">
                                         No notifications
                                     </p>
 
@@ -186,15 +186,15 @@ export default function Navbar() {
 
                                         <div
                                             key={note._id}
-                                            className={`p-4 border-b border-gray-100 hover:bg-gray-50 transition cursor-pointer
-                                                
-                                                ${note.read
-                                                    ? "bg-white"
-                                                    : "bg-blue-50"
+                                            className={`p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition cursor-pointer
+
+        ${note.read
+                                                    ? "bg-white dark:bg-gray-800"
+                                                    : "bg-blue-50 dark:bg-blue-500/30"
                                                 }`}
                                         >
 
-                                            <p className="text-sm text-gray-700 leading-6">
+                                            <p className="text-sm text-gray-700 dark:text-gray-200 leading-6">
                                                 {note.message}
                                             </p>
 
@@ -229,11 +229,11 @@ export default function Navbar() {
                         {/* USER INFO */}
                         <div className="hidden sm:block">
 
-                            <h3 className="text-sm font-semibold text-gray-700 leading-4">
+                            <h3 className="text-sm font-semibold text-gray-700 dark:text-white leading-4">
                                 {user?.name || "User"}
                             </h3>
 
-                            <p className="text-xs text-gray-400 mt-1">
+                            <p className="text-xs text-gray-400 dark:text-gray-300 mt-1">
                                 AI Upload
                             </p>
 
@@ -244,27 +244,27 @@ export default function Navbar() {
                     {/* DROPDOWN */}
                     {open && (
 
-                        <div className="absolute right-0 mt-4 w-52 bg-white rounded-2xl border border-gray-200 shadow-xl p-2 z-50">
+                        <div className="absolute right-0 mt-4 w-52 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl p-2 z-50">
 
                             <button
                                 onClick={() => navigate("/profile")}
-                                className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-xl cursor-pointer text-sm transition"
+                                className="w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-xl cursor-pointer text-sm transition dark:text-white"
                             >
                                 👤 Profile
                             </button>
 
                             <button
                                 onClick={() => navigate("/settings")}
-                                className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-xl text-sm transition cursor-pointer"
+                                className="w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-xl text-sm transition cursor-pointer dark:text-white"
                             >
                                 ⚙️ Settings
                             </button>
 
-                            <div className="h-px bg-gray-200 my-2"></div>
+                            <div className="h-px bg-gray-200 dark:bg-gray-700 my-2"></div>
 
                             <button
                                 onClick={handleLogout}
-                                className="w-full text-left px-4 py-3 hover:bg-red-50 text-red-500 rounded-xl text-sm transition cursor-pointer"
+                                className="w-full text-left px-4 py-3 hover:bg-red-50 dark:hover:bg-red-500 text-red-500 dark:text-red-400 rounded-xl text-sm transition cursor-pointer"
                             >
                                 🚪 Logout
                             </button>
