@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { FaBell, FaSearch, FaBars } from "react-icons/fa";
 import { getNotifications } from "../api/notificationApi";
 
-export default function Navbar() {
+export default function Navbar({ setSidebarOpen }) {
 
     const { user, logout } = useAuth();
 
@@ -110,7 +110,10 @@ export default function Navbar() {
             <div className="flex items-center gap-5">
 
                 {/* MENU ICON */}
-                <button className="text-gray-400 dark:text-gray-300 hover:text-gray-600 text-lg">
+                <button
+                    className="text-gray-400 dark:text-gray-300 hover:text-gray-600 text-lg"
+                    onClick={() => setSidebarOpen(true)}
+                >
 
                     <FaBars />
 

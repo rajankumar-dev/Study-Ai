@@ -50,12 +50,12 @@ export default function Sidebar() {
 
     return (
 
-        <div className="h-full flex flex-col bg-white border-r border-gray-200">
+        <div className="h-full flex flex-col bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700">
 
             {/* LOGO */}
-            <div className="h-20 flex items-center px-6 border-b border-gray-100">
+            <div className="h-20 flex items-center px-6 border-b border-gray-100 dark:border-gray-700">
 
-                <h1 className="text-3xl font-bold text-gray-800">
+                <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
                     Study<span className="text-blue-500">AI</span>
                 </h1>
 
@@ -73,11 +73,11 @@ export default function Sidebar() {
                         className={({ isActive }) =>
                             `flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-200 font-medium
                 
-                            ${isActive
-                                ? "bg-blue-100 text-blue-600 shadow-sm"
-                                : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                            }`
-                        }
+                           ${isActive
+                                ? "bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 shadow-sm"
+                                : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
+                            }
+                        `}
                     >
 
 
@@ -95,9 +95,9 @@ export default function Sidebar() {
             </div>
 
             {/* USER CARD */}
-            <div className="p-4 border-t border-gray-100">
+            <div className="p-4 border-t border-gray-100 dark:border-gray-700">
 
-                <div className="flex items-center gap-3 bg-gray-50 rounded-2xl p-3">
+                <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800 rounded-2xl p-3">
 
                     {/* AVATAR */}
                     <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
@@ -111,11 +111,11 @@ export default function Sidebar() {
                     {/* INFO */}
                     <div>
 
-                        <h3 className="font-semibold text-gray-700">
+                        <h3 className="font-semibold text-gray-700 dark:text-white">
                             {user?.name || "User"}
                         </h3>
 
-                        <p className="text-sm text-gray-400">
+                        <p className="text-sm text-gray-400 dark:text-gray-300">
                             AI Upload
                         </p>
 
