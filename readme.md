@@ -167,11 +167,17 @@ GEMINI_API_KEY=your_gemini_api_key
 Add project screenshots here:
 
 - Dashboard
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Dashboard.png?raw=true)
 - Notes Page
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Notes.png?raw=true)
 - Upload Page
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Upload.png?raw=true)
 - AI Assistant
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Ai%20Assistant.png?raw=true)
 - Profile Page
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Profile.png?raw=true)
 - Settings Page
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Setting.png?raw=true)
 
 ---
 
