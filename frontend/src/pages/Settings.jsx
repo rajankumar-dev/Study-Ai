@@ -5,9 +5,11 @@ import {
     updateProfile,
 } from "../api/userApi";
 
+
 export default function Settings() {
 
-    const { user } = useAuth();
+
+    const { user, login, token } = useAuth();
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -41,24 +43,29 @@ export default function Settings() {
 
     // SAVE SETTINGS
     const handleSave = async () => {
-
         try {
 
             setLoading(true);
 
-            // PROFILE UPDATE
-            await updateProfile({
+            // UPDATE PROFILE
+            const updatedUser = await updateProfile({
                 name,
                 email,
             });
 
-            // SETTINGS UPDATE
+            // UPDATE SETTINGS
             await updateSettings({
                 darkMode,
                 notifications,
             });
 
-            // LOCAL STORAGE
+            // UPDATE AUTH CONTEXT
+            login(
+                localStorage.getItem("token"),
+                updatedUser
+            );
+
+            // SAVE LOCAL SETTINGS
             localStorage.setItem("darkMode", darkMode);
             localStorage.setItem("notifications", notifications);
 
@@ -78,15 +85,15 @@ export default function Settings() {
     };
 
     // APPLY DARK MODE
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (darkMode) {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
-        }
+    //     if (darkMode) {
+    //         document.documentElement.classList.add("dark");
+    //     } else {
+    //         document.documentElement.classList.remove("dark");
+    //     }
 
-    }, [darkMode]);
+    // }, [darkMode]);
 
 
     // DARK MODE APPLY
