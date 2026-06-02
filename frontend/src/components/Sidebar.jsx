@@ -80,6 +80,7 @@ export default function Sidebar() {
                         }
                     >
 
+
                         <span className="text-lg">
                             {item.icon}
                         </span>
