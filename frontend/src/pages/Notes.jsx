@@ -116,10 +116,10 @@ export default function Notes() {
 
     return (
 
-        <div className="flex h-[calc(100vh-70px)] bg-gray-100">
+        <div className="flex flex-col lg:flex-row h-auto lg:h-[calc(100vh-70px)] bg-gray-100 dark:bg-gray-900">
 
             {/* LEFT SIDE */}
-            <div className="w-[320px] bg-white border-r border-gray-200 flex flex-col">
+            <div className="w-full lg:w-[320px] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
 
                 {/* Heading */}
                 <div className="p-5 border-b border-gray-100">
@@ -155,7 +155,7 @@ export default function Notes() {
                             
                             ${selectedNote?._id === note._id
                                     ? "bg-blue-100 text-blue-600 shadow-lg border-blue-200 scale-[1.02]"
-                                    : "bg-white hover:bg-gray-100 border-gray-200 hover:shadow-md"
+                                    : "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-700 hover:shadow-md"
                                 }`}
                         >
 
@@ -219,7 +219,7 @@ export default function Notes() {
                                 
                                 ${selectedNote?._id === note._id
                                         ? "text-blue-600"
-                                        : "text-gray-500"
+                                        : "text-gray-500 dark:text-gray-400"
                                     }`}
                             >
                                 {note.content}
@@ -286,9 +286,9 @@ export default function Notes() {
                         {/* MAIN VIEW */}
                         {showChat ? (
 
-                            <div className="bg-white rounded-3xl shadow-md h-[calc(100vh-170px)] flex flex-col overflow-hidden">
+                            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 h-auto xl:h-[calc(100vh-170px)]">
 
-                                <div className="p-4 border-b border-gray-100">
+                                <div className="p-4 border-b border-gray-100 dark:border-gray-700 xl:border-b-0 xl:border-r">
 
                                     <button
                                         onClick={() => setShowChat(false)}
@@ -310,22 +310,22 @@ export default function Notes() {
                             <div className="grid grid-cols-3 gap-6 h-[calc(100vh-170px)]">
 
                                 {/* NOTE CONTENT */}
-                                <div className="col-span-2 bg-white rounded-3xl shadow-md p-8 overflow-y-auto">
+                                <div className="xl:col-span-2 bg-white dark:bg-gray-800 rounded-3xl shadow-md p-5 md:p-8 overflow-y-auto">
 
-                                    <h2 className="text-3xl font-bold mb-6 text-gray-800">
+                                    <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
                                         {selectedNote.title}
                                     </h2>
 
-                                    <p className="text-gray-700 whitespace-pre-line leading-8 text-[16px]">
+                                    <p className="text-gray-700 dark:text-gray-200 whitespace-pre-line leading-8 text-[16px]">
                                         {selectedNote.content}
                                     </p>
 
                                 </div>
 
                                 {/* AI PANEL */}
-                                <div className="bg-white rounded-3xl shadow-md p-6 overflow-y-auto">
+                                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-md p-6 overflow-y-auto">
 
-                                    <h2 className="text-xl font-bold text-gray-800 mb-5">
+                                    <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-5">
                                         AI Assistant
                                     </h2>
 
@@ -340,7 +340,7 @@ export default function Notes() {
                                                     AI Summary
                                                 </h3>
 
-                                                <p className="text-gray-700 whitespace-pre-line leading-7">
+                                                <p className="text-gray-700 dark:text-gray-200 whitespace-pre-line leading-7">
                                                     {summary}
                                                 </p>
 
@@ -360,7 +360,7 @@ export default function Notes() {
                                                     Generated Questions
                                                 </h3>
 
-                                                <p className="text-gray-700 whitespace-pre-line leading-7">
+                                                <p className="text-gray-700 dark:text-gray-200 whitespace-pre-line leading-7">
                                                     {questions}
                                                 </p>
 
@@ -372,17 +372,17 @@ export default function Notes() {
                                     {/* EMPTY STATE */}
                                     {!summary && !questions && (
 
-                                        <div className="h-full flex flex-col items-center justify-center text-center text-gray-400">
+                                        <div className="h-full flex flex-col items-center justify-center text-center text-gray-400 dark:text-gray-500">
 
                                             <div className="text-5xl mb-4">
                                                 🤖
                                             </div>
 
-                                            <h3 className="font-semibold text-lg text-gray-600">
+                                            <h3 className="font-semibold text-lg text-gray-600 dark:text-gray-300">
                                                 AI Output
                                             </h3>
 
-                                            <p className="text-sm mt-2">
+                                            <p className="text-sm mt-2 text-gray-500 dark:text-gray-400">
                                                 Generate summary or questions
                                                 from your notes.
                                             </p>
