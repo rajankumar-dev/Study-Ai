@@ -1,4 +1,4 @@
-# 📚 StudyAI
+# 📚 StudyAI – AI Powered Study Assistant
 ![](https://github.com/rajankumar-dev/Wanderlust---Rental-Booking-Plateform-/blob/main/frontend/public/tech-stack.png?raw=true)
 An AI-powered study management platform that helps students organize notes, generate summaries, create questions, and interact with an intelligent AI assistant for smarter learning.
 
