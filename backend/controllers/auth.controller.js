@@ -3,69 +3,87 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
 export async function registerUser(req, res) {
-  const { name, email, password } = req.body;
+  try {
+    const { name, email, password } = req.body;
 
-  const isAllreadyRegister = await User.findOne({ email: email });
+    const isAlreadyRegister = await User.findOne({ email });
 
-  if (isAllreadyRegister) {
-    res.status(409).json({ message: "email already exist" });
-  }
-  const hashPassword = crypto.createHash("sha256").digest("hex");
+    if (isAlreadyRegister) {
+      return res.status(409).json({
+        message: "Email already exists",
+      });
+    }
 
-  const user = await User.create({ email, password: hashPassword, name });
-  console.log("user created", user);
+    const hashPassword = crypto
+      .createHash("sha256")
+      .update(password)
+      .digest("hex");
 
-  const token = jwt.sign(
-    {
-      id: user._id,
-    },
-    process.env.JWT_SECRATE,
-    {
+    const user = await User.create({
+      name,
+      email,
+      password: hashPassword,
+    });
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRETE, {
       expiresIn: "1d",
-    },
-  );
+    });
 
-  res.status(201).json({
-    message: "User registered Successfully",
-    user: {
-      name: user.name,
-      email: user.email,
-    },
-    token,
-  });
+    res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
 }
 
 export async function loginUser(req, res) {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-  if (!user) {
-    return res.status(404).json({ message: "User not found check credential" });
-  }
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
 
-  const hashPassword = crypto.createHash("sha256").digest("hex");
+    const hashPassword = crypto
+      .createHash("sha256")
+      .update(password)
+      .digest("hex");
 
-  if (hashPassword !== user.password) {
-    return res.status(401).json({ message: "Invalid password" });
-  }
+    if (hashPassword !== user.password) {
+      return res.status(401).json({
+        message: "Invalid password",
+      });
+    }
 
-  const token = jwt.sign(
-    {
-      id: user._id,
-    },
-    process.env.JWT_SECRATE,
-    {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRATE, {
       expiresIn: "1d",
-    },
-  );
+    });
 
-  res.status(200).json({
-    message: "User logged in Successfully",
-    user: {
-      name: user.name,
-      email: user.email,
-    },
-    token,
-  });
+    res.status(200).json({
+      message: "User logged in successfully",
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
 }
