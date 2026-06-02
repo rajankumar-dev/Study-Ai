@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import API from "../api/axios";
 
 export default function Chat() {
-
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -16,7 +15,6 @@ export default function Chat() {
     }, [chat, loading]);
 
     const sendMessage = async () => {
-
         if (!message.trim()) return;
 
         const userMsg = {
@@ -32,7 +30,6 @@ export default function Chat() {
         setLoading(true);
 
         try {
-
             const res = await API.post("/ai/ask", {
                 question: currentMessage,
             });
@@ -43,9 +40,7 @@ export default function Chat() {
             };
 
             setChat((prev) => [...prev, botMsg]);
-
         } catch (err) {
-
             setChat((prev) => [
                 ...prev,
                 {
@@ -53,56 +48,49 @@ export default function Chat() {
                     text: "Something went wrong. Please try again.",
                 },
             ]);
-
         } finally {
-
             setLoading(false);
-
         }
     };
 
     return (
-
-        <div className="h-[calc(100vh-90px)] flex flex-col bg-white rounded-3xl shadow-md overflow-hidden">
+        <div className="h-[calc(100vh-90px)] flex flex-col bg-white dark:bg-gray-800 rounded-3xl shadow-md overflow-hidden">
 
             {/* HEADER */}
-            <div className="px-7 py-5  bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-600 flex items-center justify-between">
+            <div className="px-4 md:px-7 py-5 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-gray-800 dark:to-gray-700 text-blue-600 dark:text-white flex items-center justify-between">
 
                 <div>
-
-                    <h1 className="text-2xl font-bold">
+                    <h1 className="text-xl md:text-2xl font-bold">
                         StudyAI Assistant
                     </h1>
 
-                    <p className="text-sm text-blue-100 mt-1">
+                    <p className="text-sm text-blue-500 dark:text-gray-300 mt-1">
                         Your personal AI powered study companion
                     </p>
-
                 </div>
 
-                <div className="w-12 h-12 rounded-full bg-blue-400 backdrop-blur flex items-center justify-center text-xl font-bold border border-white/30">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-400 flex items-center justify-center text-lg md:text-xl font-bold border border-white/30">
                     🤖
                 </div>
 
             </div>
 
             {/* CHAT AREA */}
-            <div className="flex-1 overflow-y-auto px-6 py-6 bg-gray-50 space-y-5">
+            <div className="flex-1 overflow-y-auto px-4 md:px-6 py-6 bg-gray-50 dark:bg-gray-900 space-y-5">
 
                 {/* EMPTY STATE */}
                 {chat.length === 0 && (
-
                     <div className="h-full flex flex-col items-center justify-center text-center">
 
                         <div className="text-7xl mb-5">
                             🤖
                         </div>
 
-                        <h2 className="text-3xl font-bold text-gray-700 mb-3">
+                        <h2 className="text-3xl font-bold text-gray-700 dark:text-white mb-3">
                             Ask Anything
                         </h2>
 
-                        <p className="text-gray-500 max-w-lg leading-7">
+                        <p className="text-gray-500 dark:text-gray-300 max-w-lg leading-7">
                             Ask coding, study, technology, project,
                             programming, AI or general knowledge questions.
                             StudyAI will help you instantly.
@@ -113,7 +101,6 @@ export default function Chat() {
 
                 {/* CHAT MESSAGES */}
                 {chat.map((msg, i) => (
-
                     <div
                         key={i}
                         className={`flex ${msg.type === "user"
@@ -121,27 +108,22 @@ export default function Chat() {
                             : "justify-start"
                             }`}
                     >
-
                         <div
-                            className={`max-w-[75%] px-5 py-4 rounded-3xl shadow-sm whitespace-pre-line leading-7 ${msg.type === "user"
+                            className={`max-w-[90%] md:max-w-[75%] px-5 py-4 rounded-3xl shadow-sm whitespace-pre-line leading-7 ${msg.type === "user"
                                 ? "bg-blue-500 text-white rounded-br-md"
-                                : "bg-white border border-gray-200 text-gray-700 rounded-bl-md"
+                                : "bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-white rounded-bl-md"
                                 }`}
                         >
-
                             {msg.text}
-
                         </div>
-
                     </div>
                 ))}
 
                 {/* LOADING */}
                 {loading && (
-
                     <div className="flex justify-start">
 
-                        <div className="bg-white border border-gray-300 px-5 py-4 rounded-3xl rounded-bl-md shadow-sm">
+                        <div className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 px-5 py-4 rounded-3xl rounded-bl-md shadow-sm">
 
                             <div className="flex gap-2">
 
@@ -163,7 +145,7 @@ export default function Chat() {
             </div>
 
             {/* INPUT AREA */}
-            <div className="p-5 bg-white">
+            <div className="p-4 md:p-5 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
 
                 <div className="flex items-center gap-3">
 
@@ -177,13 +159,13 @@ export default function Chat() {
                             }
                         }}
                         placeholder="Ask anything..."
-                        className="flex-1 border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-400 text-gray-700"
+                        className="flex-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-400 text-gray-700 dark:text-white"
                     />
 
                     <button
                         onClick={sendMessage}
                         disabled={loading}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-7 py-4 rounded-2xl font-medium transition shadow-sm disabled:opacity-50"
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-5 md:px-7 py-4 rounded-2xl font-medium transition shadow-sm disabled:opacity-50"
                     >
                         {loading ? "..." : "Send"}
                     </button>
