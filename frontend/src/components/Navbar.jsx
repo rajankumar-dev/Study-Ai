@@ -111,12 +111,10 @@ export default function Navbar({ setSidebarOpen }) {
 
                 {/* MENU ICON */}
                 <button
-                    className="text-gray-400 dark:text-gray-300 hover:text-gray-600 text-lg"
                     onClick={() => setSidebarOpen(true)}
+                    className="text-gray-400 dark:text-gray-300 hover:text-gray-600 dark:hover:text-white text-lg"
                 >
-
                     <FaBars />
-
                 </button>
 
                 {/* PAGE TITLE */}
