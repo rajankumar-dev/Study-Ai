@@ -70,13 +70,18 @@ export default function Settings() {
             localStorage.setItem("darkMode", darkMode);
             localStorage.setItem("notifications", notifications);
 
-            alert("✅ Settings updated successfully");
+            toast.success(
+                "Settings updated successfully"
+            );
 
         } catch (err) {
 
             console.log(err);
 
-            alert("❌ Failed to update settings");
+            toast.error(
+                err.response?.data?.message ||
+                "Failed to update settings"
+            );
 
         } finally {
 
@@ -84,17 +89,6 @@ export default function Settings() {
 
         }
     };
-
-    // APPLY DARK MODE
-    // useEffect(() => {
-
-    //     if (darkMode) {
-    //         document.documentElement.classList.add("dark");
-    //     } else {
-    //         document.documentElement.classList.remove("dark");
-    //     }
-
-    // }, [darkMode]);
 
 
     // DARK MODE APPLY
@@ -107,6 +101,21 @@ export default function Settings() {
         }
 
     }, [darkMode]);
+
+    const toggleDarkMode = () => {
+
+        const newValue = !darkMode;
+
+        setDarkMode(newValue);
+
+        localStorage.setItem("darkMode", newValue);
+
+        if (newValue) {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+    };
 
     return (
 
@@ -199,7 +208,7 @@ export default function Settings() {
                         </div>
 
                         <button
-                            onClick={() => setDarkMode(!darkMode)}
+                            onClick={toggleDarkMode}
                             className={`w-14 h-8 rounded-full cursor-pointer transition relative ${darkMode
                                 ? "bg-blue-500"
                                 : "bg-gray-300"
