@@ -1,4 +1,4 @@
-# 📚 StudyAI
+# 📚 StudyAI – AI Powered Study Assistant
 ![](https://github.com/rajankumar-dev/Wanderlust---Rental-Booking-Plateform-/blob/main/frontend/public/tech-stack.png?raw=true)
 An AI-powered study management platform that helps students organize notes, generate summaries, create questions, and interact with an intelligent AI assistant for smarter learning.
 
@@ -167,11 +167,17 @@ GEMINI_API_KEY=your_gemini_api_key
 Add project screenshots here:
 
 - Dashboard
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Dashboard.png?raw=true)
 - Notes Page
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Notes.png?raw=true)
 - Upload Page
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Upload.png?raw=true)
 - AI Assistant
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Ai%20Assistant.png?raw=true)
 - Profile Page
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Profile.png?raw=true)
 - Settings Page
+  ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Setting.png?raw=true)
 
 ---
 
