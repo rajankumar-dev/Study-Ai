@@ -37,6 +37,10 @@ const noteSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    questions: {
+      type: String,
+      default: "",
+    },
     favorite: {
       type: Boolean,
       default: false,
