@@ -50,16 +50,21 @@ export default function Notes() {
 
     // SUMMARY
     const handleSummary = async () => {
+
+        if (selectedNote.summary) {
+            setSummary(selectedNote.summary);
+            setViewMode("summary");
+            return;
+        }
+
         try {
 
             const res = await axios.post(
                 "http://localhost:4000/api/ai/summary",
-
                 {
                     noteId: selectedNote._id,
                     text: selectedNote.content,
-                }
-                ,
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -68,14 +73,10 @@ export default function Notes() {
             );
 
             setSummary(res.data.summary);
-            setQuestions("");
             setViewMode("summary");
 
         } catch (err) {
-
-            console.error(err);
-            alert("Summary failed");
-
+            console.log(err);
         }
     };
 
@@ -87,6 +88,7 @@ export default function Notes() {
             const res = await axios.post(
                 "http://localhost:4000/api/questions/generate",
                 {
+                    noteId: selectedNote._id,
                     text: selectedNote.content,
                 },
                 {
@@ -96,7 +98,27 @@ export default function Notes() {
                 }
             );
 
+            // UI update
             setQuestions(res.data.questions);
+
+            // Selected note update
+            setSelectedNote({
+                ...selectedNote,
+                questions: res.data.questions,
+            });
+
+            // Notes list update
+            setNotes((prev) =>
+                prev.map((note) =>
+                    note._id === selectedNote._id
+                        ? {
+                            ...note,
+                            questions: res.data.questions,
+                        }
+                        : note
+                )
+            );
+
             setSummary("");
             setViewMode("questions");
 
@@ -151,9 +173,14 @@ export default function Notes() {
 
                                 setSelectedNote(note);
 
-                                setSummary("");
-                                setQuestions("");
+                                // DB se saved data load karo
+                                setSummary(note.summary || "");
+                                setQuestions(note.questions || "");
 
+                                // Default note view
+                                setViewMode("note");
+
+                                // Chat close
                                 setShowChat(false);
 
                             }}
@@ -380,6 +407,6 @@ export default function Notes() {
 
             </div>
 
-        </div>
+        </div >
     );
 }

@@ -1,6 +1,6 @@
 import Groq from "groq-sdk";
+import Note from "../models/note.model.js";
 
-// ✅ Lazy init function
 const getClient = () => {
   return new Groq({
     apiKey: process.env.GROQ_API_KEY,
@@ -9,19 +9,16 @@ const getClient = () => {
 
 export const generateQuestions = async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text, noteId } = req.body;
 
-    // ✅ validation
     if (!text) {
       return res.status(400).json({
         message: "Text is required",
       });
     }
 
-    // ✅ initialize client
     const groq = getClient();
 
-    // ✅ generate questions
     const completion = await groq.chat.completions.create({
       messages: [
         {
@@ -39,11 +36,16 @@ export const generateQuestions = async (req, res) => {
       max_tokens: 700,
     });
 
-    // ✅ extract response
     const questions =
       completion.choices?.[0]?.message?.content || "No questions generated";
 
-    // ✅ send response
+    // Save in DB
+    if (noteId) {
+      await Note.findByIdAndUpdate(noteId, {
+        questions,
+      });
+    }
+
     res.status(200).json({
       success: true,
       questions,
