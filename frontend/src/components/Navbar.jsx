@@ -44,10 +44,11 @@ export default function Navbar({ setSidebarOpen }) {
     // LOGOUT
     const handleLogout = () => {
 
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         logout();
 
         navigate("/login");
-
     };
 
     // CLOSE DROPDOWN ON OUTSIDE CLICK
