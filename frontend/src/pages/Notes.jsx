@@ -20,6 +20,8 @@ export default function Notes() {
 
     const [summary, setSummary] = useState("");
     const [questions, setQuestions] = useState("");
+    const [viewMode, setViewMode] = useState("note");
+
 
     const [showChat, setShowChat] = useState(false);
 
@@ -48,7 +50,6 @@ export default function Notes() {
 
     // SUMMARY
     const handleSummary = async () => {
-
         try {
 
             const res = await axios.post(
@@ -64,11 +65,12 @@ export default function Notes() {
             );
 
             setSummary(res.data.summary);
+            setQuestions("");
+            setViewMode("summary");
 
         } catch (err) {
 
             console.error(err);
-
             alert("Summary failed");
 
         }
@@ -92,11 +94,12 @@ export default function Notes() {
             );
 
             setQuestions(res.data.questions);
+            setSummary("");
+            setViewMode("questions");
 
         } catch (err) {
 
             console.error(err);
-
             alert("Question generation failed");
 
         }
@@ -116,10 +119,10 @@ export default function Notes() {
 
     return (
 
-        <div className="flex flex-col lg:flex-row h-auto lg:h-[calc(100vh-70px)] bg-gray-100 dark:bg-gray-900">
+        <div className="flex flex-col xl:flex-row min-h-screen bg-gray-100 dark:bg-gray-900">
 
             {/* LEFT SIDE */}
-            <div className="w-full lg:w-[320px] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+            <div className="w-full lg:w-[320px] xl:min-w-[320px] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
 
                 {/* Heading */}
                 <div className="p-5 border-b border-gray-100">
@@ -234,7 +237,7 @@ export default function Notes() {
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="flex-1 p-6 overflow-hidden">
+            <div className="flex-1 p-4 md:p-6 overflow-y-auto">
 
                 {!selectedNote ? (
 
@@ -268,7 +271,10 @@ export default function Notes() {
                             </button>
 
                             <button
-                                onClick={() => setShowChat(true)}
+                                onClick={() => {
+                                    setShowChat(true);
+                                    setViewMode("chat");
+                                }}
                                 className="bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-xl cursor-pointer shadow-sm transition"
                             >
                                 Ask AI
@@ -284,117 +290,86 @@ export default function Notes() {
                         </div>
 
                         {/* MAIN VIEW */}
-                        {showChat ? (
+                        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-md h-[70vh] overflow-y-auto">
 
-                            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 h-auto xl:h-[calc(100vh-170px)]">
+                            {(viewMode === "summary" || viewMode === "questions") && (
 
-                                <div className="p-4 border-b border-gray-100 dark:border-gray-700 xl:border-b-0 xl:border-r">
+                                <div className="p-6">
 
                                     <button
-                                        onClick={() => setShowChat(false)}
-                                        className="text-blue-500 font-medium"
+                                        onClick={() => setViewMode("note")}
+                                        className="mb-5 text-blue-500 font-medium"
                                     >
                                         ← Back to Note
                                     </button>
 
-                                </div>
+                                    {summary && (
+                                        <>
+                                            <h2 className="text-2xl font-bold mb-4">
+                                                AI Summary
+                                            </h2>
 
-                                <div className="flex-1 overflow-hidden">
+                                            <p className="leading-8 whitespace-pre-line">
+                                                {summary}
+                                            </p>
+                                        </>
+                                    )}
+
+                                    {questions && (
+                                        <>
+                                            <h2 className="text-2xl font-bold mb-4">
+                                                Generated Questions
+                                            </h2>
+
+                                            <p className="leading-8 whitespace-pre-line">
+                                                {questions}
+                                            </p>
+                                        </>
+                                    )}
+
+                                </div>
+                            )}
+
+                            {viewMode === "chat" && (
+
+                                <div className="h-full">
+
+                                    <div className="p-4 border-b">
+
+                                        <button
+                                            onClick={() => {
+                                                setShowChat(false);
+                                                setViewMode("note");
+                                            }}
+                                            className="text-blue-500 font-medium"
+                                        >
+                                            ← Back to Note
+                                        </button>
+
+                                    </div>
+
                                     <ChatBox note={selectedNote} />
+
                                 </div>
+                            )}
 
-                            </div>
+                            {viewMode === "note" && (
 
-                        ) : (
-
-                            <div className="grid grid-cols-3 gap-6 h-[calc(100vh-170px)]">
-
-                                {/* NOTE CONTENT */}
-                                <div className="xl:col-span-2 bg-white dark:bg-gray-800 rounded-3xl shadow-md p-5 md:p-8 overflow-y-auto">
+                                <div className="p-6 md:p-8">
 
                                     <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
                                         {selectedNote.title}
                                     </h2>
 
-                                    <p className="text-gray-700 dark:text-gray-200 whitespace-pre-line leading-8 text-[16px]">
+                                    <p className="text-gray-700 dark:text-gray-200 whitespace-pre-line leading-8">
                                         {selectedNote.content}
                                     </p>
 
                                 </div>
+                            )}
 
-                                {/* AI PANEL */}
-                                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-md p-6 overflow-y-auto">
+                        </div>
 
-                                    <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-5">
-                                        AI Assistant
-                                    </h2>
-
-                                    {/* SUMMARY */}
-                                    {summary && (
-
-                                        <div className="mb-6">
-
-                                            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5">
-
-                                                <h3 className="font-bold text-blue-700 mb-3">
-                                                    AI Summary
-                                                </h3>
-
-                                                <p className="text-gray-700 dark:text-gray-200 whitespace-pre-line leading-7">
-                                                    {summary}
-                                                </p>
-
-                                            </div>
-
-                                        </div>
-                                    )}
-
-                                    {/* QUESTIONS */}
-                                    {questions && (
-
-                                        <div>
-
-                                            <div className="bg-purple-50 border border-purple-100 rounded-2xl p-5">
-
-                                                <h3 className="font-bold text-purple-700 mb-3">
-                                                    Generated Questions
-                                                </h3>
-
-                                                <p className="text-gray-700 dark:text-gray-200 whitespace-pre-line leading-7">
-                                                    {questions}
-                                                </p>
-
-                                            </div>
-
-                                        </div>
-                                    )}
-
-                                    {/* EMPTY STATE */}
-                                    {!summary && !questions && (
-
-                                        <div className="h-full flex flex-col items-center justify-center text-center text-gray-400 dark:text-gray-500">
-
-                                            <div className="text-5xl mb-4">
-                                                🤖
-                                            </div>
-
-                                            <h3 className="font-semibold text-lg text-gray-600 dark:text-gray-300">
-                                                AI Output
-                                            </h3>
-
-                                            <p className="text-sm mt-2 text-gray-500 dark:text-gray-400">
-                                                Generate summary or questions
-                                                from your notes.
-                                            </p>
-
-                                        </div>
-                                    )}
-
-                                </div>
-
-                            </div>
-
-                        )}
 
                     </>
 
