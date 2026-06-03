@@ -60,7 +60,7 @@ export default function Notes() {
         try {
 
             const res = await axios.post(
-                "http://localhost:4000/api/ai/summary",
+                "https://study-ai-backend-igdr.onrender.com/api/ai/summary",
                 {
                     noteId: selectedNote._id,
                     text: selectedNote.content,
@@ -86,7 +86,7 @@ export default function Notes() {
         try {
 
             const res = await axios.post(
-                "http://localhost:4000/api/questions/generate",
+                "https://study-ai-backend-igdr.onrender.com/api/questions/generate",
                 {
                     noteId: selectedNote._id,
                     text: selectedNote.content,

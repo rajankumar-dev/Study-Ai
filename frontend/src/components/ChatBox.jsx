@@ -34,7 +34,7 @@ export default function ChatBox({ note }) {
         try {
 
             const res = await axios.post(
-                "http://localhost:4000/api/ai/ask",
+                "https://study-ai-backend-igdr.onrender.com/api/ai/ask",
                 {
                     question: currentInput,
                     content: note.content,
@@ -126,8 +126,8 @@ export default function ChatBox({ note }) {
                     <div
                         key={i}
                         className={`flex ${msg.role === "user"
-                                ? "justify-end"
-                                : "justify-start"
+                            ? "justify-end"
+                            : "justify-start"
                             }`}
                     >
 

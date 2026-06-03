@@ -32,7 +32,7 @@ export default function UploadPage() {
             setLoading(true);
 
             const res = await axios.post(
-                "http://localhost:4000/api/files/upload",
+                "https://study-ai-backend-igdr.onrender.com/api/files/upload",
                 formData,
                 {
                     headers: {

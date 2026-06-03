@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:4000/api",
+  baseURL: "https://study-ai-backend-igdr.onrender.com/api",
 });
 
 // Token auto attach
