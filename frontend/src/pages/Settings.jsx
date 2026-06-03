@@ -115,11 +115,11 @@ export default function Settings() {
             {/* Header */}
             <div className="mb-8">
 
-                <h1 className="text-3xl font-bold text-gray-800">
+                <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
                     Settings
                 </h1>
 
-                <p className="text-gray-500 mt-2">
+                <p className="text-gray-500 dark:text-gray-400 mt-2">
                     Manage your account preferences and application settings.
                 </p>
 
@@ -129,7 +129,7 @@ export default function Settings() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {/* Profile Settings */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-600">
 
                     <h2 className="text-xl font-semibold mb-5">
                         Profile
@@ -178,9 +178,9 @@ export default function Settings() {
                 </div>
 
                 {/* Appearance */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
 
-                    <h2 className="text-xl font-semibold mb-5">
+                    <h2 className="text-xl font-semibold mb-5 text-gray-800 dark:text-white">
                         Appearance
                     </h2>
 
@@ -188,11 +188,11 @@ export default function Settings() {
 
                         <div>
 
-                            <h3 className="font-medium text-gray-700">
+                            <h3 className="font-medium text-gray-700 dark:text-white">
                                 Dark Mode
                             </h3>
 
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
                                 Enable dark theme
                             </p>
 
@@ -220,9 +220,9 @@ export default function Settings() {
                 </div>
 
                 {/* Notifications */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
 
-                    <h2 className="text-xl font-semibold mb-5">
+                    <h2 className="text-xl font-semibold mb-5 text-gray-800 dark:text-white">
                         Notifications
                     </h2>
 
@@ -230,11 +230,11 @@ export default function Settings() {
 
                         <div>
 
-                            <h3 className="font-medium text-gray-700">
+                            <h3 className="font-medium text-gray-700 dark:text-white">
                                 Push Notifications
                             </h3>
 
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
                                 Receive app notifications
                             </p>
 
@@ -264,16 +264,16 @@ export default function Settings() {
                 </div>
 
                 {/* Security */}
-                <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
 
-                    <h2 className="text-xl font-semibold mb-5">
+                    <h2 className="text-xl font-semibold mb-5 text-gray-800 dark:text-white">
                         Security
                     </h2>
 
                     <div className="space-y-3">
 
                         <button
-                            className="w-full border rounded-2xl py-3 hover:bg-gray-50 transition cursor-pointer"
+                            className="w-full border border-gray-300 dark:border-gray-600 rounded-2xl py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer text-gray-800 dark:text-white"
                             onClick={() =>
                                 alert("🔒 Change password feature coming soon")
                             }
@@ -282,7 +282,7 @@ export default function Settings() {
                         </button>
 
                         <button
-                            className="w-full border border-red-200 text-red-500 rounded-2xl py-3 hover:bg-red-50 transition cursor-pointer"
+                            className="w-full border border-red-200 dark:border-red-600 text-red-500 dark:text-red-400 rounded-2xl py-3 hover:bg-red-50 dark:hover:bg-red-500/20 transition cursor-pointer"
                             onClick={() => {
                                 const confirmDelete = window.confirm(
                                     "Are you sure you want to delete your account?"
