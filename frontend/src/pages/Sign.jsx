@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Signup() {
 
@@ -8,13 +9,22 @@ export default function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const handleSignup = async (e) => {
 
         e.preventDefault();
 
+        if (!name || !email || !password) {
+            toast.error("Please fill all fields");
+            return;
+        }
+
         try {
+
+            setLoading(true);
 
             await API.post("/auth/register", {
                 name,
@@ -36,6 +46,10 @@ export default function Signup() {
                 err.response?.data?.message ||
                 "Signup failed"
             );
+
+        } finally {
+
+            setLoading(false);
 
         }
     };
@@ -116,9 +130,17 @@ export default function Signup() {
                     {/* BUTTON */}
                     <button
                         type="submit"
-                        className="w-full py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-500 to-blue-400 hover:opacity-90 transition cursor-pointer"
+                        disabled={loading}
+                        className="w-full py-3 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-500 to-blue-400 hover:opacity-90 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                        Sign Up
+                        {loading ? (
+                            <>
+                                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                Creating Account...
+                            </>
+                        ) : (
+                            "Sign Up"
+                        )}
                     </button>
 
                 </form>
