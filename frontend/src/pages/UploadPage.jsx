@@ -3,6 +3,7 @@ import ProgressBar from "../components/ProgressBar";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function UploadPage() {
 
