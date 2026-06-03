@@ -12,9 +12,21 @@ import UploadPage from "./pages/UploadPage";
 import Favorites from "./pages/Favorites";
 import Settings from "./pages/Settings";
 import { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
 
 function App() {
   const token = localStorage.getItem("token");
+  useEffect(() => {
+
+    const darkMode = localStorage.getItem("darkMode");
+
+    if (darkMode === "true") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+  }, []);
   return (
     <BrowserRouter>
       <Toaster
