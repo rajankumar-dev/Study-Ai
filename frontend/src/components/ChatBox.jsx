@@ -26,6 +26,8 @@ export default function ChatBox({ note }) {
 
         setMessages((prev) => [...prev, userMessage]);
 
+        const currentInput = input;
+
         setInput("");
         setLoading(true);
 
@@ -34,7 +36,7 @@ export default function ChatBox({ note }) {
             const res = await axios.post(
                 "http://localhost:4000/api/ai/ask",
                 {
-                    question: input,
+                    question: currentInput,
                     content: note.content,
                 },
                 {
@@ -72,18 +74,18 @@ export default function ChatBox({ note }) {
 
     return (
 
-        <div className="flex flex-col h-full bg-white rounded-3xl overflow-hidden">
+        <div className="flex flex-col h-full bg-white dark:bg-gray-800 rounded-3xl overflow-hidden">
 
             {/* HEADER */}
-            <div className="px-6 py-4 border-b bg-white flex items-center justify-between">
+            <div className="px-4 md:px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-center justify-between">
 
                 <div>
 
-                    <h2 className="text-xl font-bold text-gray-800">
+                    <h2 className="text-lg md:text-xl font-bold text-gray-800 dark:text-white">
                         AI Study Assistant
                     </h2>
 
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-1">
                         Ask questions from your selected notes
                     </p>
 
@@ -96,21 +98,21 @@ export default function ChatBox({ note }) {
             </div>
 
             {/* CHAT AREA */}
-            <div className="flex-1 overflow-y-auto px-6 py-5 bg-gray-50 space-y-5">
+            <div className="flex-1 overflow-y-auto px-3 md:px-6 py-5 bg-gray-50 dark:bg-gray-900 space-y-5">
 
                 {messages.length === 0 && (
 
                     <div className="h-full flex flex-col items-center justify-center text-center">
 
-                        <div className="text-6xl mb-4">
+                        <div className="text-5xl md:text-6xl mb-4">
                             🤖
                         </div>
 
-                        <h2 className="text-2xl font-bold text-gray-700 mb-2">
+                        <h2 className="text-xl md:text-2xl font-bold text-gray-700 dark:text-white mb-2">
                             Start Conversation
                         </h2>
 
-                        <p className="text-gray-500 max-w-md">
+                        <p className="text-gray-500 dark:text-gray-400 max-w-md px-4">
                             Ask AI anything related to your notes.
                             The assistant will use your uploaded study material
                             to answer intelligently.
@@ -124,17 +126,17 @@ export default function ChatBox({ note }) {
                     <div
                         key={i}
                         className={`flex ${msg.role === "user"
-                            ? "justify-end"
-                            : "justify-start"
+                                ? "justify-end"
+                                : "justify-start"
                             }`}
                     >
 
                         <div
-                            className={`max-w-[75%] px-5 py-4 rounded-3xl shadow-sm whitespace-pre-line leading-7
+                            className={`max-w-[90%] md:max-w-[75%] px-4 md:px-5 py-3 md:py-4 rounded-3xl shadow-sm whitespace-pre-line leading-7 break-words
                             
                             ${msg.role === "user"
                                     ? "bg-blue-500 text-white rounded-br-md"
-                                    : "bg-white text-gray-700 border border-gray-200 rounded-bl-md"
+                                    : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 rounded-bl-md"
                                 }`}
                         >
 
@@ -150,7 +152,7 @@ export default function ChatBox({ note }) {
 
                     <div className="flex justify-start">
 
-                        <div className="bg-white border border-gray-200 px-5 py-4 rounded-3xl rounded-bl-md shadow-sm">
+                        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-5 py-4 rounded-3xl rounded-bl-md shadow-sm">
 
                             <div className="flex gap-2">
 
@@ -172,9 +174,9 @@ export default function ChatBox({ note }) {
             </div>
 
             {/* INPUT AREA */}
-            <div className="p-5 bg-white border-t">
+            <div className="p-3 md:p-5 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
 
                     <input
                         type="text"
@@ -186,13 +188,13 @@ export default function ChatBox({ note }) {
                             }
                         }}
                         placeholder="Ask something about your notes..."
-                        className="flex-1 border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-400 text-gray-700"
+                        className="flex-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-400"
                     />
 
                     <button
                         onClick={sendMessage}
                         disabled={loading}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-7 py-4 rounded-2xl font-medium transition shadow-sm disabled:opacity-50"
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-4 rounded-2xl font-medium transition shadow-sm disabled:opacity-50 cursor-pointer"
                     >
                         {loading ? "..." : "Send"}
                     </button>
