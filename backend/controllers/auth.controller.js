@@ -25,7 +25,9 @@ export async function registerUser(req, res) {
       password: hashPassword,
     });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRETE, {
+    // console.log("JWT =", process.env.JWT_SECRATE);
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRATE, {
       expiresIn: "1d",
     });
 
@@ -38,9 +40,14 @@ export async function registerUser(req, res) {
       token,
     });
   } catch (error) {
-    console.log(error);
+    console.log("FULL ERROR:", error);
+
+    console.log("MESSAGE:", error.message);
+
+    console.log("STACK:", error.stack);
+
     res.status(500).json({
-      message: "Server Error",
+      message: error.message,
     });
   }
 }
@@ -67,6 +74,8 @@ export async function loginUser(req, res) {
         message: "Invalid password",
       });
     }
+
+    // console.log("LOGIN JWT =", process.env.JWT_SECRATE);
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRATE, {
       expiresIn: "1d",

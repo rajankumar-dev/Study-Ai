@@ -1,5 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
+
 import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
@@ -11,11 +15,11 @@ import Profile from "./pages/Profile";
 import UploadPage from "./pages/UploadPage";
 import Favorites from "./pages/Favorites";
 import Settings from "./pages/Settings";
-import { Toaster } from "react-hot-toast";
-import { useEffect } from "react";
 
 function App() {
+
   const token = localStorage.getItem("token");
+
   useEffect(() => {
 
     const darkMode = localStorage.getItem("darkMode");
@@ -27,8 +31,10 @@ function App() {
     }
 
   }, []);
+
   return (
     <BrowserRouter>
+
       <Toaster
         position="top-right"
         toastOptions={{
@@ -40,35 +46,129 @@ function App() {
           },
         }}
       />
+
       <Routes>
 
-        {/* Layout Wrap */}
+        {/* Redirect */}
+        <Route
+          path="/"
+          element={
+            token
+              ? <Navigate to="/dashboard" replace />
+              : <Navigate to="/login" replace />
+          }
+        />
+
+        {/* Auth Routes */}
+        <Route
+          path="/login"
+          element={
+            token
+              ? <Navigate to="/dashboard" replace />
+              : <Login />
+          }
+        />
+
+        <Route
+          path="/signup"
+          element={
+            token
+              ? <Navigate to="/dashboard" replace />
+              : <Signup />
+          }
+        />
+
+        {/* Protected Routes */}
+
         <Route
           path="/dashboard"
-          element={token ? <Layout><Home /></Layout> : <Login />}
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Home />
+              </Layout>
+            </ProtectedRoute>
+          }
         />
-        <Route path="/" element={<Navigate to="/dashboard" />} />
-        <Route path="/chat" element={<Layout><Chat /></Layout>} />
-        <Route path="/create" element={<Layout><CreateNote /></Layout>} />
-        <Route path="/notes" element={<Layout><Notes /></Layout>} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/profile" element={<Layout><Profile /></Layout>} />
-        <Route path="/upload" element={<Layout><UploadPage /></Layout>} />
+
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Chat />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/create"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <CreateNote />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/notes"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Notes />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Profile />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/upload"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <UploadPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/favorites"
           element={
-            <Layout>
-              <Favorites />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <Favorites />
+              </Layout>
+            </ProtectedRoute>
           }
         />
+
         <Route
           path="/settings"
-          element={<Layout><Settings /></Layout>}
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Settings />
+              </Layout>
+            </ProtectedRoute>
+          }
         />
-      </Routes>
 
+      </Routes>
 
     </BrowserRouter>
   );

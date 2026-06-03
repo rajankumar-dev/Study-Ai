@@ -35,7 +35,7 @@ export default function Login() {
 
             toast.success("Login successful");
 
-            navigate("/");
+            navigate("/dashboard");
 
         } catch (err) {
 
