@@ -22,7 +22,9 @@ export default function Signup() {
                 password,
             });
 
-            alert("✅ Account created successfully");
+            toast.success(
+                "Account created successfully"
+            );
 
             navigate("/login");
 
@@ -30,7 +32,10 @@ export default function Signup() {
 
             console.log(err);
 
-            alert("❌ Signup failed");
+            toast.error(
+                err.response?.data?.message ||
+                "Signup failed"
+            );
 
         }
     };

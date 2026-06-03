@@ -19,7 +19,7 @@ export default function UploadPage() {
             file.type !== "application/pdf" &&
             file.type !== "text/plain"
         ) {
-            alert("❌ Only PDF and TXT files are allowed");
+            toast.error("Only PDF and TXT files are allowed");
             return;
         }
 
@@ -51,8 +51,10 @@ export default function UploadPage() {
 
             console.log("Upload Response:", res.data);
 
-            alert("✅ File uploaded successfully");
-            alert("✅ Note created successfully");
+            toast.success(
+                "File uploaded successfully"
+            );
+            toast.success("Note created successfully");
 
             navigate("/notes");
 
@@ -60,9 +62,9 @@ export default function UploadPage() {
 
             console.error(err);
 
-            alert(
+            toast.error(
                 err.response?.data?.message ||
-                "❌ Upload failed"
+                "Upload failed"
             );
 
         } finally {

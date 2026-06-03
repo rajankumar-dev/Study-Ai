@@ -11,11 +11,23 @@ import Profile from "./pages/Profile";
 import UploadPage from "./pages/UploadPage";
 import Favorites from "./pages/Favorites";
 import Settings from "./pages/Settings";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const token = localStorage.getItem("token");
   return (
     <BrowserRouter>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            borderRadius: "12px",
+            padding: "16px",
+            fontSize: "14px",
+          },
+        }}
+      />
       <Routes>
 
         {/* Layout Wrap */}

@@ -38,10 +38,14 @@ export default function Profile() {
                 updated
             );
 
-            alert("✅ Profile updated successfully");
+            toast.success(
+                "Profile updated successfully"
+            );
         } catch (error) {
             console.log(error);
-            alert("❌ Failed to update profile");
+            toast.error(
+                "Failed to update profile"
+            );
         }
     };
 

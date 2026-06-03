@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { useAuth } from "../context/AuthContext"; // ✅ add this
+import toast from "react-hot-toast";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -12,17 +13,30 @@ export default function Login() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        try {
-            const res = await API.post("/auth/login", { email, password });
 
-            console.log(res.data);
+        if (!email || !password) {
+            toast.error("Please fill all fields");
+            return;
+        }
+
+        try {
+            const res = await API.post("/auth/login", {
+                email,
+                password,
+            });
 
             login(res.data.token, res.data.user);
 
+            toast.success("Login successful");
+
             navigate("/");
         } catch (err) {
-            console.log(err.response?.data || err.message)
-            alert("Login failed");
+            console.log(err.response?.data || err.message);
+
+            toast.error(
+                err.response?.data?.message ||
+                "Login failed"
+            );
         }
     };
 

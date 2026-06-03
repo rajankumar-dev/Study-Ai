@@ -10,7 +10,7 @@ const CreateNote = () => {
         e.preventDefault();
 
         if (!title.trim() || !content.trim()) {
-            alert("Please fill all fields");
+            toast.error("Please fill all fields");
             return;
         }
 
@@ -22,13 +22,13 @@ const CreateNote = () => {
                 content,
             });
 
-            alert("✅ Note created successfully");
+            toast.success("Note created successfully");
 
             setTitle("");
             setContent("");
         } catch (error) {
             console.log(error);
-            alert("❌ Failed to create note");
+            toast.error("Failed to create note");
         } finally {
             setLoading(false);
         }
