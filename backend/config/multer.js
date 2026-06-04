@@ -1,21 +1,38 @@
 import multer from "multer";
+import fs from "fs";
+import path from "path";
+
+// Create folders if they don't exist
+const pdfDir = "uploads/pdfs";
+const imageDir = "uploads/images";
+
+if (!fs.existsSync(pdfDir)) {
+  fs.mkdirSync(pdfDir, { recursive: true });
+}
+
+if (!fs.existsSync(imageDir)) {
+  fs.mkdirSync(imageDir, { recursive: true });
+}
 
 // Storage config
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     if (file.mimetype === "application/pdf") {
-      cb(null, "uploads/pdfs");
+      cb(null, pdfDir);
     } else {
-      cb(null, "uploads/images");
+      cb(null, imageDir);
     }
   },
+
   filename: function (req, file, cb) {
-    const uniqueName = Date.now() + "-" + file.originalname;
+    const uniqueName =
+      Date.now() + "-" + file.originalname.replace(/\s+/g, "_");
+
     cb(null, uniqueName);
   },
 });
 
-// File filter (important for validation)
+// File filter
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === "application/pdf" ||
@@ -30,7 +47,9 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
 });
 
 export default upload;
