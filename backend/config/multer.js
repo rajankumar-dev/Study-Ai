@@ -42,6 +42,9 @@ const fileFilter = (req, file, cb) => {
   } else {
     cb(new Error("Only PDF and Images allowed"), false);
   }
+  console.log("FILE:", req.file);
+  console.log("FILE PATH:", req.file?.path);
+  console.log("EXISTS:", fs.existsSync(req.file?.path));
 };
 
 const upload = multer({
