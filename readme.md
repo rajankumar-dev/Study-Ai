@@ -93,28 +93,122 @@ An AI-powered study management platform that helps students organize notes, gene
 ```bash
 StudyAI/
 │
-├── frontend/
-│   ├── src/
-│       ├── api/
-│       ├── assets/
-│       ├── components/
-│       ├── context/
-│       ├── features/
-│       ├── pages/
-
-
-│
 ├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middlewares/
+│   │
 │   ├── config/
-│   └── utils/
-│   └── services/
-│   └── uploads/
+│   │   ├── ai.js
+│   │   ├── db.js
+│   │   └── multer.js
+│   │
+│   ├── controllers/
+│   │   ├── ai.controller.js
+│   │   ├── auth.controller.js
+│   │   ├── notes.controller.js
+│   │   ├── question.controller.js
+│   │   └── user.controller.js
+│   │
+│   ├── middlewares/
+│   │   └── auth.middleware.js
+│   │
+│   ├── models/
+│   │   ├── chat.model.js
+│   │   ├── note.model.js
+│   │   ├── notification.model.js
+│   │   └── user.model.js
+│   │
+│   ├── routes/
+│   │   ├── ai.route.js
+│   │   ├── auth.routes.js
+│   │   ├── notes.routes.js
+│   │   ├── notification.route.js
+│   │   ├── question.routes.js
+│   │   ├── upload.routes.js
+│   │   └── user.routes.js
+│   │
+│   ├── services/
+│   │
+│   ├── uploads/
+│   │   ├── images/
+│   │   └── pdfs/
+│   │
+│   ├── utils/
+│   │   ├── cloudinary.js
+│   │   └── createNotification.js
+│   │
+│   ├── app.js
+│   ├── constants.js
+│   ├── package.json
+│   └── .env
 │
-└── README.md
+├── frontend/
+│   │
+│   ├── public/
+│   │   └── _redirects
+│   │
+│   ├── src/
+│   │   │
+│   │   ├── api/
+│   │   │   ├── axios.js
+│   │   │   ├── notificationApi.js
+│   │   │   └── userApi.js
+│   │   │
+│   │   ├── assets/
+│   │   │
+│   │   ├── components/
+│   │   │   ├── ChatBox.jsx
+│   │   │   ├── Layout.jsx
+│   │   │   ├── Loader.jsx
+│   │   │   ├── NoteCard.jsx
+│   │   │   ├── ProgressBar.jsx
+│   │   │   ├── ProtectedRoute.jsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   └── UploadBox.jsx
+│   │   │
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx
+│   │   │
+│   │   ├── features/
+│   │   │   ├── ai/
+│   │   │   ├── auth/
+│   │   │   └── notes/
+│   │   │       └── notesApi.js
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Chat.jsx
+│   │   │   ├── CreateNote.jsx
+│   │   │   ├── Favorites.jsx
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Notes.jsx
+│   │   │   ├── Profile.jsx
+│   │   │   ├── Settings.jsx
+│   │   │   ├── Sign.jsx
+│   │   │   └── UploadPage.jsx
+│   │   │
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── package.json
+│   └── vite.config.js
+│
+├── docs/
+│   ├── api-design.md
+│   ├── auth-flow.md
+│   ├── database-design.md
+│   └── SRS-Study-AI.pdf
+│
+├── screenshots/
+│   ├── Dashboard.png
+│   ├── Notes.png
+│   ├── Upload.png
+│   ├── AI Assistant.png
+│   ├── Profile.png
+│   └── Settings.png
+│
+├── README.md
+└── .gitignore
+
 ```
 
 ---
