@@ -255,7 +255,7 @@ JWT_SECRET=your_jwt_secret
 GEMINI_API_KEY=your_gemini_api_key
 ```
 
----
+<!-- ---
 
 ## 📸 Screenshots
 
@@ -274,7 +274,7 @@ Add project screenshots here:
 - Settings Page
   ![](https://github.com/rajankumar-dev/Study-Ai/blob/main/screenshoots/Setting.png?raw=true)
 
----
+--- -->
 
 ## 🔒 Security Features
 
