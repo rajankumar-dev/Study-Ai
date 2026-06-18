@@ -58,8 +58,8 @@ An AI-powered study management platform that helps students organize notes, gene
 
 - React.js
 - Vite
-- Tailwind CSS
 - React Router DOM
+- Tailwind CSS
 - Axios
 - React Icons
 
@@ -80,8 +80,8 @@ An AI-powered study management platform that helps students organize notes, gene
 
 ### AI Integration
 
-- Google Gemini API (Paid)
 - Groq API (Free)
+- Google Gemini API (Paid)
 
 ### File Upload
 
