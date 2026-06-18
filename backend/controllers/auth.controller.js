@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
-import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 export async function registerUser(req, res) {
   try {
@@ -76,6 +76,7 @@ export async function loginUser(req, res) {
     }
 
     // console.log("LOGIN JWT =", process.env.JWT_SECRATE);
+    // Enhance new version
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRATE, {
       expiresIn: "1d",
