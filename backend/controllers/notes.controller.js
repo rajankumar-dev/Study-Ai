@@ -24,7 +24,7 @@ export const createNote = async (req, res) => {
       fileType = req.file.mimetype;
     }
 
-    // 🔥 SIMPLE & STABLE LOGIC
+    // SIMPLE & STABLE LOGIC
     let extractedText = content; //For devlopment use only. Baad me change krna hai pdf-parse se
     let summary = await generateSummary(extractedText);
 
@@ -40,7 +40,7 @@ export const createNote = async (req, res) => {
       fileUrl,
       fileType,
       extractedText,
-      summary, // 🔥 new field
+      summary,
     });
 
     await createNotification(req.user.id, "New note created 📄");
@@ -54,7 +54,7 @@ export const createNote = async (req, res) => {
   }
 };
 
-//Get all Notes
+//Get all Notes from db
 export const getNotes = async (req, res) => {
   try {
     const page = Number(req.query.page) || 1;
