@@ -34,7 +34,7 @@
 //   }
 // };
 
-// We are using groq-ai free ai summary extracter
+// We are using groq-ai free ai summary extracter because my openAi free token is finished.
 import Groq from "groq-sdk";
 
 // ✅ Lazy client init
