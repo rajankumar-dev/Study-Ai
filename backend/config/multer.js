@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// File filter
+// File filter using pdf
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === "application/pdf" ||

@@ -8,8 +8,8 @@ import {
   toggleFavorite,
 } from "../controllers/notes.controller.js";
 
-import upload from "../config/multer.js";
 import protect from "../middlewares/auth.middleware.js";
+import upload from "../config/multer.js";
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.post("/", protect, upload.single("file"), createNote);
 // GET ALL NOTES
 router.get("/", protect, getNotes);
 
-// ⭐ FAVORITE ROUTE
+// FAVORITE ROUTE
 router.put("/favorite/:id", protect, toggleFavorite);
 
 // GET SINGLE NOTE
