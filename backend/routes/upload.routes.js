@@ -51,12 +51,12 @@ router.post(
     try {
       const file = req.file;
 
-      // ❌ No file
+      // No file
       if (!file) {
         return res.status(400).json({ message: "No file uploaded" });
       }
 
-      // ❌ Only PDF & TXT allowed
+      // Only PDF & TXT allowed
       if (
         file.mimetype !== "application/pdf" &&
         file.mimetype !== "text/plain"
@@ -66,7 +66,7 @@ router.post(
         });
       }
 
-      // ✅ Extract text
+      // Extract text
       const extractedText = await extractText(file.path, file.mimetype);
 
       if (!extractedText || extractedText.trim().length === 0) {
@@ -75,14 +75,14 @@ router.post(
         });
       }
 
-      // ✅ Create note
+      //Create note
       const note = await Note.create({
         user: req.user.id,
         title: file.originalname,
         content: extractedText,
       });
 
-      // ✅ Response
+      //Response
       res.status(200).json({
         message: "File uploaded & note created successfully",
         noteId: note._id,

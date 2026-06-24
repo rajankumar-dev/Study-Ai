@@ -1,7 +1,7 @@
 import express from "express";
+import User from "../models/user.model.js";
 import upload from "../config/multer.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
-import User from "../models/user.model.js";
 
 import {
   uploadProfilePic,
@@ -13,7 +13,7 @@ import {
 
 const router = express.Router();
 
-/* =========================
+/* ========================
    PROFILE PICTURE
 ========================= */
 

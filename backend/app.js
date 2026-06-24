@@ -7,9 +7,9 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import questionRoutes from "./routes/question.routes.js";
 import aiRoutes from "./routes/ai.route.js";
 import notificationRoutes from "./routes/notification.route.js";
-import questionRoutes from "./routes/question.routes.js";
 
 const app = express();
 app.use(cors());
@@ -20,8 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/notes", notesRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/files", uploadRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/files", uploadRoutes);
 
 app.use("/uploads", express.static("uploads"));
 
